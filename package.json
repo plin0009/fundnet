@@ -1,0 +1,25 @@
+{
+  "name": "tohacks-2020",
+  "version": "1.0.0",
+  "description": "For TOHacks2020",
+  "main": "index.js",
+  "scripts": {
+    "start-server": "cd backend && npm start",
+    "start-web": "cd web && npm start",
+    "start": "concurrently \"npm run start-server\" \"npm run start-web\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plin0009/tohacks-2020.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/plin0009/tohacks-2020/issues"
+  },
+  "homepage": "https://github.com/plin0009/tohacks-2020#readme",
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
