@@ -16,7 +16,7 @@ const clientPort = 3000;
 class CookieDataSource extends RemoteGraphQLDataSource {
   willSendRequest({ request, context }) {
     if (context.user) {
-      request.header("x-user-id", context.user.id);
+      request.http.headers.set("x-user-id", context.user.id);
     }
   }
   didReceiveResponse({ response, context }) {
