@@ -8,5 +8,18 @@ export const User = mongoose.model(
       type: String,
       required: true,
     },
+    minAge: Number,
+    maxAge: Number,
+    employment: {
+      hours: {
+        type: String,
+        enum: ["FULL_TIME", "PART_TIME", "UNEMPLOYED"],
+      },
+      status: {
+        type: String,
+        enum: ["EMPLOYEE", "WORKER", "SELF_EMPLOYED"],
+      },
+      income: Number,
+    },
   })
 );
