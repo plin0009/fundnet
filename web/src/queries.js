@@ -19,13 +19,20 @@ export const GET_ME = gql`
   {
     me {
       handle
+
       minAge
       maxAge
-      employment {
-        hours
-        status
-        income
-      }
+      homeOwner
+      autoOwner
+      student
+      veteran
+      specialNeeds
+      physicalCondition
+      mentalCondition
+
+      employmentHours
+      employmentStatus
+      income
     }
   }
 `;
