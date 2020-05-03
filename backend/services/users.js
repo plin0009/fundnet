@@ -8,7 +8,8 @@ import { secret } from "../config";
 
 const typeDefs = gql`
   extend type Query {
-    users: [User]!
+    # users: [User]!
+    me: User
   }
   extend type Mutation {
     signup(handle: String!, pass: String!): AuthPayload
@@ -25,7 +26,19 @@ const typeDefs = gql`
 
     minAge: Int
     maxAge: Int
-    employment: EmploymentState
+
+    homeOwner: Boolean
+    autoOwner: Boolean
+    student: Boolean
+    veteran: Boolean
+    specialNeeds: Boolean
+    physicalCondition: Boolean
+    mentalCondition: Boolean
+
+    # employment: EmploymentState
+    employmentHours: EmploymentHours
+    employmentStatus: EmploymentStatus
+    income: Int
   }
   type EmploymentState {
     hours: EmploymentHours
@@ -35,20 +48,27 @@ const typeDefs = gql`
   enum EmploymentHours {
     FULL_TIME
     PART_TIME
-    UNEMPLOYED
     OTHER
   }
   enum EmploymentStatus {
     EMPLOYEE
     WORKER
     SELF_EMPLOYED
+    UNEMPLOYED
+    OTHER
   }
 `;
 
 const resolvers = {
   Query: {
-    users: async () => {
+    /* users: async () => {
       return await User.find();
+    }, */
+    me: async (_, __, { me }) => {
+      if (!me.id) {
+        return null;
+      }
+      return await User.findById(me.id);
     },
   },
   Mutation: {

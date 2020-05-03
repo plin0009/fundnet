@@ -1,14 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { ApolloProvider } from "@apollo/react-hooks";
+import ApolloClient from "apollo-client";
+import { createHttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
 
+const serverPort = 8000;
+
+const httpLink = createHttpLink({
+  uri: `http://localhost:${serverPort}`,
+  credentials: "include",
+});
+const cache = new InMemoryCache();
+const client = new ApolloClient({
+  link: httpLink,
+  cache,
+});
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
