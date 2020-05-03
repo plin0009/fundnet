@@ -19,8 +19,11 @@ const typeDefs = gql`
   type AuthPayload {
     token: String
   }
+  extend type Bulletin @key(fields: "_id") {
+    _id: ID! @external
+  }
   type User @key(fields: "_id") {
-    _id: String!
+    _id: ID!
     handle: String!
     pass: String!
 
@@ -36,15 +39,10 @@ const typeDefs = gql`
     physicalCondition: Boolean
     mentalCondition: Boolean
 
-    # employment: EmploymentState
     employmentHours: EmploymentHours
     employmentStatus: EmploymentStatus
     income: Int
-  }
-  type EmploymentState {
-    hours: EmploymentHours
-    status: EmploymentStatus
-    income: Int
+    bulletins: [Bulletin!]!
   }
   enum EmploymentHours {
     FULL_TIME
@@ -75,9 +73,11 @@ const resolvers = {
   Mutation: {
     signup: async (_, { handle, pass }) => {
       const hashedPass = await bcrypt.hash(pass, 10);
+      // TODO: check if duplicate or illegal handle
       const user = new User({
         handle,
         pass: hashedPass,
+        bulletins: [],
       });
       await user.save();
       const token = jwt.sign(

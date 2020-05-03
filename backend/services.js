@@ -1,9 +1,19 @@
 import { UsersService } from "./services/users";
+import { OrgsService } from "./services/org";
+import { BulletinsService } from "./services/bulletins";
 
 const services = [
   {
     name: "users",
     server: UsersService,
+  },
+  {
+    name: "orgs",
+    server: OrgsService,
+  },
+  {
+    name: "bulletins",
+    server: BulletinsService,
   },
 ];
 

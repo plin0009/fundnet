@@ -18,24 +18,42 @@ class CookieDataSource extends RemoteGraphQLDataSource {
     if (context.user) {
       request.http.headers.set("x-user-id", context.user.id);
     }
+    if (context.org) {
+      request.http.headers.set("x-org-id", context.org.id);
+    }
   }
   didReceiveResponse({ response, context }) {
     let token = null;
+    let type = null;
     if (response.data) {
       if (response.data.signup) {
         if (response.data.signup.token) {
+          type = "user";
           token = response.data.signup.token;
           response.data.signup.token = "Set as cookie";
         }
       } else if (response.data.login) {
         if (response.data.login.token) {
+          type = "user";
           token = response.data.login.cookie;
           response.data.login.token = "Set as cookie";
+        }
+      } else if (response.data.orgSignup) {
+        if (response.data.orgSignup.token) {
+          type = "org";
+          token = response.data.orgSignup.token;
+          response.data.orgSignup.token = "Set as cookie";
+        }
+      } else if (response.data.orgLogin) {
+        if (response.data.orgLogin.token) {
+          type = "org";
+          token = response.data.orgLogin.token;
+          response.data.orgLogin.token = "Set as cookie";
         }
       }
     }
     if (token) {
-      context.res.cookie("user-jwt", token, {
+      context.res.cookie(`${type}-jwt`, token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 2,
       });
@@ -59,10 +77,16 @@ class CookieDataSource extends RemoteGraphQLDataSource {
     subscriptions: false,
     context: ({ req, res }) => {
       let user = null;
-      if (req.cookies && req.cookies["user-jwt"]) {
-        user = jwt.verify(req.cookies["user-jwt"], secret);
+      let org = null;
+      if (req.cookies) {
+        if (req.cookies["user-jwt"]) {
+          user = jwt.verify(req.cookies["user-jwt"], secret);
+        }
+        if (req.cookies["org-jwt"]) {
+          org = jwt.verify(req.cookies["org-jwt"], secret);
+        }
       }
-      return { res, user };
+      return { res, user, org };
     },
   });
   app.use(
