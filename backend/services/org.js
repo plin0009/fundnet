@@ -1,15 +1,26 @@
 import { gql, ApolloServer } from "apollo-server-express";
 import { buildFederatedSchema } from "@apollo/federation";
-import { Org } from "../models";
+import { Org, Bulletin } from "../models";
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { secret } from "../config";
 
 const typeDefs = gql`
+  extend type Query {
+    orgMe: Org
+  }
   extend type Mutation {
     orgSignup(handle: String!, name: String!, pass: String!): AuthPayload
     orgLogin(handle: String!, pass: String!): AuthPayload
+
+    addBulletin(
+      title: String!
+      description: String
+      website: String
+      filters: String
+    ): Bulletin
+    changeBulletin(id: ID!, changes: String!): Bulletin
   }
   type AuthPayload {
     token: String
@@ -27,8 +38,16 @@ const typeDefs = gql`
   }
 `;
 const resolvers = {
+  Query: {
+    orgMe: async (_, __, { me }) => {
+      if (!me.id) {
+        return null;
+      }
+      return await Org.findById(me.id);
+    },
+  },
   Mutation: {
-    orgSignup: async ({ handle, name, pass }) => {
+    orgSignup: async (_, { handle, name, pass }) => {
       const hashedPass = await bcrypt.hash(pass, 10);
       const org = new Org({
         handle,
@@ -44,7 +63,7 @@ const resolvers = {
       );
       return { token };
     },
-    orgLogin: async ({ handle, pass }) => {
+    orgLogin: async (_, { handle, pass }) => {
       const org = await Org.findOne({ handle });
       if (!org) return { token: null };
       const valid = await bcrypt.compare(pass, org.pass);
@@ -56,6 +75,41 @@ const resolvers = {
         secret
       );
       return { token };
+    },
+    addBulletin: async (
+      _,
+      { title, description, website, filters },
+      { me }
+    ) => {
+      if (!me.id) {
+        return null;
+      }
+      console.log(title, description, website, filters);
+      const bulletin = new Bulletin({
+        creator: me.id,
+        title,
+        description,
+        website,
+        filters: JSON.parse(filters),
+      });
+      const org = await Org.findById(me.id);
+      org.bulletins.push({ _id: bulletin._id });
+      await org.save();
+      return await bulletin.save();
+    },
+    changeBulletin: async (_, { id, changes }, { me }) => {
+      if (!me.id) {
+        return null;
+      }
+      console.log(id, changes);
+      const bulletin = await Bulletin.findById(id);
+      if (!bulletin) {
+        return null;
+      }
+      await bulletin.update({
+        ...JSON.parse(changes),
+      });
+      return bulletin;
     },
   },
   Org: {

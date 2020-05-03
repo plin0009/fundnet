@@ -16,7 +16,7 @@ const typeDefs = gql`
     creator: Creator!
     description: String
     website: String
-    filters: Filters
+    filters: Filters!
   }
   type Filters {
     minAge: Int

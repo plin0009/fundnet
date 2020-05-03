@@ -14,6 +14,20 @@ export const LOGIN = gql`
     }
   }
 `;
+export const ORG_SIGNUP = gql`
+  mutation OrgSignup($handle: String!, $name: String!, $pass: String!) {
+    orgSignup(handle: $handle, name: $name, pass: $pass) {
+      token
+    }
+  }
+`;
+export const ORG_LOGIN = gql`
+  mutation OrgLogin($handle: String!, $pass: String!) {
+    orgLogin(handle: $handle, pass: $pass) {
+      token
+    }
+  }
+`;
 
 export const GET_ME = gql`
   {
@@ -38,6 +52,40 @@ export const GET_ME = gql`
   }
 `;
 
+export const GET_ORG_ME = gql`
+  {
+    orgMe {
+      handle
+      name
+      website
+      bulletins {
+        _id
+        title
+        description
+        website
+        filters {
+          minAge
+          maxAge
+
+          homeOwner
+          autoOwner
+          student
+          veteran
+          pregnant
+          parent
+          physicalCondition
+          mentalCondition
+
+          employmentHours
+          employmentStatus
+          minIncome
+          maxIncome
+        }
+      }
+    }
+  }
+`;
+
 export const CHANGE_ME = gql`
   mutation ChangeMe($changes: String!) {
     changeMe(changes: $changes) {
@@ -57,6 +105,32 @@ export const CHANGE_ME = gql`
       employmentHours
       employmentStatus
       income
+    }
+  }
+`;
+
+export const CHANGE_BULLETIN = gql`
+  mutation ChangeBulletin($id: ID!, $changes: String!) {
+    changeBulletin(id: $id, changes: $changes) {
+      _id
+    }
+  }
+`;
+
+export const ADD_BULLETIN = gql`
+  mutation AddBulletin(
+    $title: String!
+    $description: String
+    $website: String
+    $filters: String!
+  ) {
+    addBulletin(
+      title: $title
+      description: $description
+      website: $website
+      filters: $filters
+    ) {
+      _id
     }
   }
 `;

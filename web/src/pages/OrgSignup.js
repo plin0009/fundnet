@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { LOGIN } from "../queries";
+import { ORG_SIGNUP } from "../queries";
 
-const Login = ({ history }) => {
-  const [login] = useMutation(LOGIN);
+const OrgSignup = ({ history }) => {
+  const [orgSignup] = useMutation(ORG_SIGNUP);
+  const [nameInput, setNameInput] = useState("");
   const [handleInput, setHandleInput] = useState("");
   const [passInput, setPassInput] = useState("");
   return (
@@ -13,7 +14,19 @@ const Login = ({ history }) => {
           <div className="columns">
             <div className="column is-4">
               <div className="box">
-                <h1 className="title">Sign in</h1>
+                <h1 className="title">Join as an organization</h1>
+                <div className="field">
+                  <label htmlFor="">Organization name</label>
+                  <div className="control">
+                    <input
+                      value={nameInput}
+                      onChange={(e) => setNameInput(e.target.value)}
+                      type="text"
+                      className="input"
+                      placeholder="How people will see you"
+                    />
+                  </div>
+                </div>
                 <div className="field">
                   <label htmlFor="">Handle</label>
                   <div className="control">
@@ -22,7 +35,7 @@ const Login = ({ history }) => {
                       onChange={(e) => setHandleInput(e.target.value)}
                       type="text"
                       className="input"
-                      placeholder="Handle"
+                      placeholder="You'll use this to sign in"
                     />
                   </div>
                 </div>
@@ -34,29 +47,29 @@ const Login = ({ history }) => {
                       onChange={(e) => setPassInput(e.target.value)}
                       type="password"
                       className="input"
-                      placeholder="Password"
+                      placeholder="Enter something secure!"
                     />
                   </div>
                 </div>
                 <button
                   className="button"
                   onClick={async () => {
-                    const response = await login({
+                    const response = await orgSignup({
                       variables: {
+                        name: nameInput,
                         handle: handleInput,
                         pass: passInput,
                       },
                     });
-                    console.log(`received`);
-                    console.log(response);
-                    if (response.data.login.token === "Set as cookie") {
-                      history.push("/me");
+                    console.log(`received ${response}`);
+                    if (response.data.orgSignup.token === "Set as cookie") {
+                      history.push("/org/me");
                     } else {
-                      console.log(`error ${response.data.login.token}`);
+                      console.log(`error ${response.data.orgSignup.token}`);
                     }
                   }}
                 >
-                  Sign in
+                  Join
                 </button>
               </div>
             </div>
@@ -67,4 +80,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default Login;
+export default OrgSignup;

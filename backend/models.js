@@ -80,7 +80,11 @@ export const Org = mongoose.model(
     },
     name: String,
     website: String,
-    bulletins: [bulletinSchema],
+    bulletins: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
   })
 );
 

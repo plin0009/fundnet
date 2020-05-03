@@ -22,7 +22,7 @@ const Signup = ({ history }) => {
                       onChange={(e) => setHandleInput(e.target.value)}
                       type="text"
                       className="input"
-                      placeholder="Handle"
+                      placeholder="You'll use this to sign in"
                     />
                   </div>
                 </div>
@@ -34,7 +34,7 @@ const Signup = ({ history }) => {
                       onChange={(e) => setPassInput(e.target.value)}
                       type="password"
                       className="input"
-                      placeholder="Handle"
+                      placeholder="Enter something secure!"
                     />
                   </div>
                 </div>

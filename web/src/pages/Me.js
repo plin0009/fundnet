@@ -208,7 +208,9 @@ const Me = () => {
                               }
                               placeholder="An estimate is good enough!"
                               onChange={(e) => {
-                                const newValue = +e.target.value;
+                                const newValue = e.target.value
+                                  ? +e.target.value
+                                  : null;
                                 setEmploymentEdits((edits) => ({
                                   ...edits,
                                   income: newValue,

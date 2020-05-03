@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { LOGIN } from "../queries";
+import { ORG_LOGIN } from "../queries";
 
-const Login = ({ history }) => {
-  const [login] = useMutation(LOGIN);
+const OrgLogin = ({ history }) => {
+  const [orgLogin] = useMutation(ORG_LOGIN);
   const [handleInput, setHandleInput] = useState("");
   const [passInput, setPassInput] = useState("");
   return (
@@ -13,7 +13,7 @@ const Login = ({ history }) => {
           <div className="columns">
             <div className="column is-4">
               <div className="box">
-                <h1 className="title">Sign in</h1>
+                <h1 className="title">Sign in as organization</h1>
                 <div className="field">
                   <label htmlFor="">Handle</label>
                   <div className="control">
@@ -41,7 +41,7 @@ const Login = ({ history }) => {
                 <button
                   className="button"
                   onClick={async () => {
-                    const response = await login({
+                    const response = await orgLogin({
                       variables: {
                         handle: handleInput,
                         pass: passInput,
@@ -49,10 +49,10 @@ const Login = ({ history }) => {
                     });
                     console.log(`received`);
                     console.log(response);
-                    if (response.data.login.token === "Set as cookie") {
-                      history.push("/me");
+                    if (response.data.orgLogin.token === "Set as cookie") {
+                      history.push("/org/me");
                     } else {
-                      console.log(`error ${response.data.login.token}`);
+                      console.log(`error ${response.data.orgLogin.token}`);
                     }
                   }}
                 >
@@ -67,4 +67,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default Login;
+export default OrgLogin;
