@@ -1,6 +1,6 @@
 import { gql, ApolloServer } from "apollo-server-express";
 import { buildFederatedSchema } from "@apollo/federation";
-import { Bulletin } from "../models";
+import { Bulletin, Org } from "../models";
 
 const typeDefs = gql`
   extend type User @key(fields: "_id") {
@@ -9,11 +9,11 @@ const typeDefs = gql`
   extend type Org @key(fields: "_id") {
     _id: ID! @external
   }
-  union Creator = User | Org
+  # union Creator = User | Org
   type Bulletin @key(fields: "_id") {
     _id: ID!
     title: String!
-    creator: Creator!
+    creator: Org #Creator!
     description: String
     website: String
     filters: Filters!
@@ -56,16 +56,20 @@ const resolvers = {
     __resolveReference: async ({ _id }) => {
       return await Bulletin.findById(_id);
     },
+    creator: async ({ creator }) => {
+      const org = await Org.findById(creator._id);
+      if (org) return org;
+    },
   },
 };
 
 export const BulletinsService = new ApolloServer({
   schema: buildFederatedSchema([{ typeDefs, resolvers }]),
-  context: ({ req }) => {
+  /* context: ({ req }) => {
     return {
       me: {
         id: req.header("x-user-id"),
       },
     };
-  },
+  }, */
 });

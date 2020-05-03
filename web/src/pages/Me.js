@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { GET_ME, CHANGE_ME } from "../queries";
+import { GET_ME, CHANGE_ME, LOGOUT } from "../queries";
 import {
   employmentStatusEnum,
   employmentHoursEnum,
   attributes,
 } from "../constants";
 
-const Me = () => {
-  const { loading, error, data } = useQuery(GET_ME);
+const Me = ({ history }) => {
+  const { client, loading, error, data } = useQuery(GET_ME);
+  // console.log(loading, error, data);
   const [changeMe] = useMutation(CHANGE_ME);
 
   const [ageEdits, setAgeEdits] = useState(null);
   const [attributeEdits, setAttributeEdits] = useState(null);
 
   const [employmentEdits, setEmploymentEdits] = useState(null);
+  const [logout] = useMutation(LOGOUT, {
+    update: async () => {
+      await client.resetStore();
+      history.push("/login");
+    },
+  });
 
-  if (data) {
+  if (data && data.me) {
     if (!ageEdits && data.me.minAge) setAgeEdits(data.me.minAge);
     if (!attributeEdits)
       setAttributeEdits(() => {
@@ -47,6 +54,7 @@ const Me = () => {
     const changes = JSON.stringify({
       ...employmentEdits,
     });
+    console.log(changes);
     const response = await saveChanges(changes);
     console.log(response);
   };
@@ -88,7 +96,7 @@ const Me = () => {
                               className="input"
                               // value={data && data.me.handle}
                             >
-                              {data ? data.me.handle : ""}
+                              {(data && data.me && data.me.handle) || ""}
                             </p>
                           </div>
                         </div>
@@ -106,6 +114,20 @@ const Me = () => {
                         </div>
                       </div>
                     </div>
+                    <div className="field is-horizontal">
+                      <label className="label field-label is-normal">
+                        Sign out
+                      </label>
+                      <div className="field-body">
+                        <div className="field">
+                          <div className="control">
+                            <button className="button" onClick={logout}>
+                              Sign out
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -117,7 +139,7 @@ const Me = () => {
                       </div>
                       <div className="column is-narrow">
                         <button
-                          className="button is-success"
+                          className="button is-success is-light"
                           onClick={saveEmployment}
                         >
                           Save changes
@@ -137,7 +159,10 @@ const Me = () => {
                                   : ""
                               }
                               onChange={(e) => {
-                                const newValue = e.target.value;
+                                const newValue =
+                                  e.target.value === "Unspecified"
+                                    ? null
+                                    : e.target.value;
                                 setEmploymentEdits((edits) => ({
                                   ...edits,
                                   employmentStatus: newValue,
@@ -169,7 +194,10 @@ const Me = () => {
                                       : ""
                                   }
                                   onChange={(e) => {
-                                    const newValue = e.target.value;
+                                    const newValue =
+                                      e.target.value === "Unspecified"
+                                        ? null
+                                        : e.target.value;
                                     setEmploymentEdits((edits) => ({
                                       ...edits,
                                       employmentHours: newValue,
@@ -236,7 +264,7 @@ const Me = () => {
                       </div>
                       <div className="column is-narrow">
                         <div
-                          className="button is-success"
+                          className="button is-success is-light"
                           onClick={saveBasicInfo}
                         >
                           Save changes
@@ -295,7 +323,7 @@ const Me = () => {
                       </div>
                       <div className="column is-narrow">
                         <button
-                          className="button is-success"
+                          className="button is-success is-light"
                           onClick={saveJobFinding}
                         >
                           Save changes
@@ -309,7 +337,7 @@ const Me = () => {
                         <input
                           type="text"
                           className="input"
-                          value={data && data.me.location}
+                          value={data && data.me && data.me.location}
                           placeholder="e.g. Toronto"
                         />
                         <p className="help">

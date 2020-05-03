@@ -10,10 +10,13 @@ import Me from "./pages/Me";
 import OrgSignup from "./pages/OrgSignup";
 import OrgLogin from "./pages/OrgLogin";
 import OrgMe from "./pages/OrgMe";
+import Bulletins from "./pages/Bulletins";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/signup" exact component={Signup} />
@@ -22,6 +25,7 @@ function App() {
         <Route path="/org/login" exact component={OrgLogin} />
         <Route path="/me" exact component={Me} />
         <Route path="/org/me" exact component={OrgMe} />
+        <Route path="/bulletins" exact component={Bulletins} />
         <Route path="/" component={NotFound} />
       </Switch>
     </BrowserRouter>

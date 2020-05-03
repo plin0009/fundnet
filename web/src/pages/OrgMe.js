@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_ORG_ME, CHANGE_BULLETIN, ADD_BULLETIN } from "../queries";
-import Bulletin from "../components/Bulletin";
+import { EditableBulletin } from "../components/Bulletin";
 
 const OrgMe = ({ history }) => {
   const { loading, error, data } = useQuery(GET_ORG_ME);
@@ -36,16 +36,25 @@ const OrgMe = ({ history }) => {
     <main>
       <section className="section">
         <div className="container">
-          <h1 className="title">Organization dashboard</h1>
+          <h1 className="title">Organization Dashboard</h1>
+          <div className="box">
+            <div className="columns">
+              <div className="column">
+                <h1 className="subtitle is-2 has-text-centered">
+                  {name ? `Welcome, ${name}!` : "Welcome!"}
+                </h1>
+              </div>
+            </div>
+          </div>
           <h2 className="title is-4">My bulletins</h2>
           <div className="columns is-multiline">
             {bulletins.map((bulletin) => (
               <div className="column is-4" key={bulletin._id}>
-                <Bulletin before={bulletin} onSaveEdit={editBulletin} />
+                <EditableBulletin before={bulletin} onSaveEdit={editBulletin} />
               </div>
             ))}
             <div className="column is-4">
-              <Bulletin onSaveEdit={addNewBulletin} isNew={true} />
+              <EditableBulletin onSaveEdit={addNewBulletin} isNew={true} />
             </div>
           </div>
         </div>

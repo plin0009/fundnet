@@ -1,5 +1,5 @@
 import { gql, ApolloServer } from "apollo-server-express";
-import { User } from "../models";
+import { User, Bulletin } from "../models";
 import { buildFederatedSchema } from "@apollo/federation";
 
 import bcrypt from "bcrypt";
@@ -10,11 +10,13 @@ const typeDefs = gql`
   extend type Query {
     # users: [User]!
     me: User
+    bulletins: [Bulletin!]!
   }
   extend type Mutation {
     signup(handle: String!, pass: String!): AuthPayload
     login(handle: String!, pass: String!): AuthPayload
     changeMe(changes: String!): User
+    logout: Boolean
   }
   type AuthPayload {
     token: String
@@ -69,6 +71,13 @@ const resolvers = {
       }
       return await User.findById(me.id);
     },
+    bulletins: async (_, __, { me }) => {
+      const allBulletins = await Bulletin.find();
+      if (!me.id) {
+        return allBulletins;
+      }
+      return allBulletins; //.filt()
+    },
   },
   Mutation: {
     signup: async (_, { handle, pass }) => {
@@ -121,11 +130,10 @@ const resolvers = {
         // no
         return null;
       }
-      console.log(changes);
       const updated = await user.update(JSON.parse(changes));
-      // console.log(updated);
       return user;
     },
+    logout: () => true,
   },
   User: {
     __resolveReference: async ({ _id }) => {

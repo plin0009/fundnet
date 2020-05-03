@@ -134,3 +134,41 @@ export const ADD_BULLETIN = gql`
     }
   }
 `;
+
+export const GET_BULLETINS = gql`
+  {
+    bulletins {
+      _id
+      title
+      description
+      website
+      creator {
+        name
+      }
+      filters {
+        minAge
+        maxAge
+
+        homeOwner
+        autoOwner
+        student
+        veteran
+        pregnant
+        parent
+        physicalCondition
+        mentalCondition
+
+        employmentHours
+        employmentStatus
+        minIncome
+        maxIncome
+      }
+    }
+  }
+`;
+
+export const LOGOUT = gql`
+  mutation {
+    logout
+  }
+`;

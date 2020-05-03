@@ -5,7 +5,7 @@ import {
   attributes,
 } from "../constants";
 
-const Bulletin = ({ before, onSaveEdit, isNew }) => {
+export const EditableBulletin = ({ before, onSaveEdit, isNew }) => {
   const [editing, setEditing] = useState(false);
   const [edits, setEdits] = useState(null);
 
@@ -61,12 +61,12 @@ const Bulletin = ({ before, onSaveEdit, isNew }) => {
       // console.log([...newFilterEnum]);
 
       /* console.log({
-        ...e,
-        filters: {
-          ...e.filters,
-          [filterEnum]: [...newFilterEnum],
-        },
-      }); */
+          ...e,
+          filters: {
+            ...e.filters,
+            [filterEnum]: [...newFilterEnum],
+          },
+        }); */
       return {
         ...e,
         filters: {
@@ -165,7 +165,7 @@ const Bulletin = ({ before, onSaveEdit, isNew }) => {
                       }}
                     />
                   </div>
-                  <button className="button is-static is-small">-</button>
+                  <button className="button is-static is-small">to</button>
                   <div className="control">
                     <input
                       type="text"
@@ -197,7 +197,7 @@ const Bulletin = ({ before, onSaveEdit, isNew }) => {
                           edits.filters[value]
                             ? "is-success"
                             : edits.filters.attributeCount
-                            ? "is-danger"
+                            ? "is-light"
                             : ""
                         }`}
                         onClick={() => {
@@ -309,16 +309,16 @@ const Bulletin = ({ before, onSaveEdit, isNew }) => {
           </div>
           <div className="column is-6">
             <button
-              className="button is-fullwidth is-success"
+              className="button is-fullwidth is-success is-light"
               onClick={() => {
-                onSaveEdit({ id: before._id, ...edits });
+                onSaveEdit({ id: before ? before._id : null, ...edits });
               }}
             >
               Save
             </button>
           </div>
           <div className="column is-6">
-            <button className="button is-fullwidth" onClick={stopEdit}>
+            <button className="button is-fullwidth is-light" onClick={stopEdit}>
               Cancel
             </button>
           </div>
@@ -328,7 +328,7 @@ const Bulletin = ({ before, onSaveEdit, isNew }) => {
   }
   if (isNew) {
     return (
-      <div className="button is-fullwidth" onClick={startEdit}>
+      <div className="button is-fullwidth is-success" onClick={startEdit}>
         Add a bulletin
       </div>
     );
@@ -338,7 +338,7 @@ const Bulletin = ({ before, onSaveEdit, isNew }) => {
     <div className="box">
       <div className="columns is-mobile is-multiline">
         <div className="column is-12">
-          <h1 className="title is-6">{title}</h1>
+          <h1 className="title is-4">{title}</h1>
           <p>{description}</p>
           {website ? <a href={website}>{website}</a> : null}
         </div>
@@ -351,6 +351,21 @@ const Bulletin = ({ before, onSaveEdit, isNew }) => {
           <button className="button is-fullwidth is-danger" onClick={startEdit}>
             Remove
           </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+const Bulletin = ({ before }) => {
+  const { title, description, website, creator } = { ...before };
+  return (
+    <div className="box">
+      <div className="columns is-mobile is-multiline">
+        <div className="column is-12">
+          <h1 className="title is-4">{title}</h1>
+          <h2 className="subtitle">{creator.name}</h2>
+          <p>{description}</p>
+          {website ? <a href={website}>{website}</a> : null}
         </div>
       </div>
     </div>
