@@ -1,5 +1,5 @@
 {
-  "name": "tohacks-2020",
+  "name": "fundnet",
   "version": "1.0.0",
   "description": "For TOHacks2020",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/plin0009/tohacks-2020.git"
+    "url": "git+https://github.com/plin0009/fundnet.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/plin0009/tohacks-2020/issues"
+    "url": "https://github.com/plin0009/fundnet/issues"
   },
-  "homepage": "https://github.com/plin0009/tohacks-2020#readme",
+  "homepage": "https://github.com/plin0009/fundnet#readme",
   "devDependencies": {
     "concurrently": "^5.2.0"
   }

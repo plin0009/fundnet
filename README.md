@@ -1,2 +1,4 @@
-# tohacks-2020
+# FundNet
+
 For TOHacks2020
+devpost coming soon
