@@ -1,6 +1,6 @@
-import React from "react";
-import { useQuery } from "@apollo/react-hooks";
-import { GET_ME } from "../queries";
+import React, { useState } from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { GET_ME, CHANGE_ME } from "../queries";
 import {
   employmentStatusEnum,
   employmentHoursEnum,
@@ -9,6 +9,59 @@ import {
 
 const Me = () => {
   const { loading, error, data } = useQuery(GET_ME);
+  const [changeMe] = useMutation(CHANGE_ME);
+
+  const [ageEdits, setAgeEdits] = useState(null);
+  const [attributeEdits, setAttributeEdits] = useState(null);
+
+  const [employmentEdits, setEmploymentEdits] = useState(null);
+
+  if (data) {
+    if (!ageEdits && data.me.minAge) setAgeEdits(data.me.minAge);
+    if (!attributeEdits)
+      setAttributeEdits(() => {
+        const newEdits = {};
+        attributes.forEach(({ value }) => {
+          newEdits[value] = !!data.me[value];
+        });
+        return newEdits;
+      });
+    if (!employmentEdits)
+      setEmploymentEdits(() => ({
+        employmentStatus: data.me.employmentStatus,
+        employmentHours: data.me.employmentHours,
+        income: data.me.income,
+      }));
+  }
+  const saveBasicInfo = async () => {
+    const changes = JSON.stringify({
+      minAge: +ageEdits,
+      maxAge: +ageEdits,
+      ...attributeEdits,
+    });
+    const response = await saveChanges(changes);
+    console.log(response);
+  };
+
+  const saveEmployment = async () => {
+    const changes = JSON.stringify({
+      ...employmentEdits,
+    });
+    const response = await saveChanges(changes);
+    console.log(response);
+  };
+  const saveJobFinding = async () => {
+    const changes = JSON.stringify({});
+    const response = await saveChanges(changes);
+    console.log(response);
+  };
+  const saveChanges = async (changes) => {
+    return await changeMe({
+      variables: {
+        changes,
+      },
+    });
+  };
   return (
     <main>
       <section className="section">
@@ -30,11 +83,25 @@ const Me = () => {
                             <button className="button is-static">@</button>
                           </div>
                           <div className="control is-expanded">
-                            <input
+                            <p
                               type="text"
                               className="input"
-                              value={data && data.me.handle}
-                            />
+                              // value={data && data.me.handle}
+                            >
+                              {data ? data.me.handle : ""}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="field is-horizontal">
+                      <label className="label field-label is-normal">
+                        Password
+                      </label>
+                      <div className="field-body">
+                        <div className="field">
+                          <div className="control">
+                            <button className="button">Change password</button>
                           </div>
                         </div>
                       </div>
@@ -44,16 +111,44 @@ const Me = () => {
 
                 <div className="column is-12">
                   <div className="box">
-                    <h2 className="subtitle">Employment and income</h2>
+                    <div className="columns is-mobile">
+                      <div className="column">
+                        <h2 className="subtitle">Employment and income</h2>
+                      </div>
+                      <div className="column is-narrow">
+                        <button
+                          className="button is-success"
+                          onClick={saveEmployment}
+                        >
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+
                     <div className="columns is-mobile">
                       <div className="column is-6">
                         <div className="field">
                           <label className="label">Employment status</label>
                           <div className="select">
-                            <select value={data && data.me.employmentHours}>
+                            <select
+                              value={
+                                employmentEdits
+                                  ? employmentEdits.employmentStatus
+                                  : ""
+                              }
+                              onChange={(e) => {
+                                const newValue = e.target.value;
+                                setEmploymentEdits((edits) => ({
+                                  ...edits,
+                                  employmentStatus: newValue,
+                                }));
+                              }}
+                            >
                               {employmentStatusEnum.map(
                                 ({ display, value }) => (
-                                  <option value={value}>{display}</option>
+                                  <option key={value} value={value}>
+                                    {display}
+                                  </option>
                                 )
                               )}
                             </select>
@@ -68,11 +163,24 @@ const Me = () => {
                             <div className="control is-expanded">
                               <div className="select">
                                 <select
-                                  value={data && data.me.employmentStatus}
+                                  value={
+                                    employmentEdits
+                                      ? employmentEdits.employmentHours
+                                      : ""
+                                  }
+                                  onChange={(e) => {
+                                    const newValue = e.target.value;
+                                    setEmploymentEdits((edits) => ({
+                                      ...edits,
+                                      employmentHours: newValue,
+                                    }));
+                                  }}
                                 >
                                   {employmentHoursEnum.map(
                                     ({ display, value }) => (
-                                      <option value={value}>{display}</option>
+                                      <option key={value} value={value}>
+                                        {display}
+                                      </option>
                                     )
                                   )}
                                 </select>
@@ -95,8 +203,17 @@ const Me = () => {
                             <input
                               type="text"
                               className="input"
-                              value={data && data.me.employmentIncome}
-                              placeholder="You don't have to be exact!"
+                              value={
+                                employmentEdits ? employmentEdits.income : ""
+                              }
+                              placeholder="An estimate is good enough!"
+                              onChange={(e) => {
+                                const newValue = +e.target.value;
+                                setEmploymentEdits((edits) => ({
+                                  ...edits,
+                                  income: newValue,
+                                }));
+                              }}
                             />
                           </div>
                         </div>
@@ -111,15 +228,32 @@ const Me = () => {
               <div className="columns is-multiline">
                 <div className="column is-12">
                   <div className="box">
-                    <h2 className="subtitle">Basic info</h2>
+                    <div className="columns is-mobile">
+                      <div className="column">
+                        <h2 className="subtitle">Basic info</h2>
+                      </div>
+                      <div className="column is-narrow">
+                        <div
+                          className="button is-success"
+                          onClick={saveBasicInfo}
+                        >
+                          Save changes
+                        </div>
+                      </div>
+                    </div>
                     <div className="field">
                       <div className="control">
                         <label className="label">Age</label>
                         <input
                           type="text"
                           className="input"
-                          value={data && data.me.minAge}
+                          value={ageEdits}
+                          onChange={(e) => setAgeEdits(+e.target.value)}
+                          placeholder="e.g. 26"
                         />
+                        <p className="help">
+                          A number! You don't have to be exact.
+                        </p>
                       </div>
                     </div>
                     <div className="field">
@@ -127,7 +261,21 @@ const Me = () => {
                         <label className="label">Attributes</label>
                         <div className="buttons">
                           {attributes.map((attribute) => (
-                            <button className="button is-rounded">
+                            <button
+                              key={attribute.value}
+                              onClick={() => {
+                                setAttributeEdits((a) => ({
+                                  ...a,
+                                  [attribute.value]: !a[attribute.value],
+                                }));
+                              }}
+                              className={`button is-rounded ${
+                                attributeEdits &&
+                                attributeEdits[attribute.value]
+                                  ? "is-success"
+                                  : "is-light"
+                              }`}
+                            >
                               {attribute.display}
                             </button>
                           ))}
@@ -136,9 +284,38 @@ const Me = () => {
                     </div>
                   </div>
                 </div>
+
                 <div className="column is-12">
                   <div className="box">
-                    <h2 className="subtitle">Employment and income</h2>
+                    <div className="columns is-mobile">
+                      <div className="column">
+                        <h2 className="subtitle">Job finding</h2>
+                      </div>
+                      <div className="column is-narrow">
+                        <button
+                          className="button is-success"
+                          onClick={saveJobFinding}
+                        >
+                          Save changes
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="field">
+                      <div className="control">
+                        <label className="label">Location</label>
+                        <input
+                          type="text"
+                          className="input"
+                          value={data && data.me.location}
+                          placeholder="e.g. Toronto"
+                        />
+                        <p className="help">
+                          Country or province or city or first three digits of
+                          postal code
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

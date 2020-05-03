@@ -14,7 +14,7 @@ const typeDefs = gql`
   extend type Mutation {
     signup(handle: String!, pass: String!): AuthPayload
     login(handle: String!, pass: String!): AuthPayload
-    editInfo(changes: String!): User
+    changeMe(changes: String!): User
   }
   type AuthPayload {
     token: String
@@ -111,16 +111,20 @@ const resolvers = {
         token,
       };
     },
-    editInfo: async (_, { changes }, { me }) => {
+    changeMe: async (_, { changes }, { me }) => {
       if (!me.id) {
         // no
+        return null;
       }
       const user = await User.findById(me.id);
       if (!user) {
         // no
+        return null;
       }
-      user.update(JSON.parse(changes));
-      return await user.save();
+      console.log(changes);
+      const updated = await user.update(JSON.parse(changes));
+      // console.log(updated);
+      return user;
     },
   },
   User: {
