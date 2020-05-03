@@ -28,7 +28,8 @@ export const attributes = [
   { display: "auto owner", value: "autoOwner" },
   { display: "student", value: "student" },
   { display: "veteran", value: "veteran" },
-  { display: "special needs", value: "specialNeeds" },
+  { display: "pregnant", value: "pregnant" },
+  { display: "parent", value: "parent" },
   { display: "long-term physical condition(s)", value: "physicalCondition" },
   { display: "long-term mental condition(s)", value: "mentalCondition" },
 ];

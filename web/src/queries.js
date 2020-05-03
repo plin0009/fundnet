@@ -26,7 +26,31 @@ export const GET_ME = gql`
       autoOwner
       student
       veteran
-      specialNeeds
+      pregnant
+      parent
+      physicalCondition
+      mentalCondition
+
+      employmentHours
+      employmentStatus
+      income
+    }
+  }
+`;
+
+export const CHANGE_ME = gql`
+  mutation ChangeMe($changes: String!) {
+    changeMe(changes: $changes) {
+      handle
+
+      minAge
+      maxAge
+      homeOwner
+      autoOwner
+      student
+      veteran
+      pregnant
+      parent
       physicalCondition
       mentalCondition
 

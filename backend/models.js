@@ -15,7 +15,8 @@ export const User = mongoose.model(
     autoOwner: Boolean,
     student: Boolean,
     veteran: Boolean,
-    specialNeeds: Boolean,
+    pregnant: Boolean,
+    parent: Boolean,
     physicalCondition: Boolean,
     mentalCondition: Boolean,
 
