@@ -5,7 +5,7 @@ import {
   attributes,
 } from "../constants";
 
-export const EditableBulletin = ({ before, onSaveEdit, isNew }) => {
+export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
   const [editing, setEditing] = useState(false);
   const [edits, setEdits] = useState(null);
 
@@ -93,236 +93,253 @@ export const EditableBulletin = ({ before, onSaveEdit, isNew }) => {
 
   if (editing) {
     return (
-      <div className="box">
-        <div className="columns is-multiline is-mobile">
-          <div className="column is-12">
-            <div className="field">
-              <label className="label">Title</label>
-              <div className="control">
-                <input
-                  type="text"
-                  className="input title is-6"
-                  value={edits.title}
-                  placeholder="Title"
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setEdits((e) => ({ ...e, title: newValue }));
-                  }}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Description</label>
-              <div className="control">
-                <input
-                  type="text"
-                  className="input"
-                  value={edits.description}
-                  placeholder="Description here"
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setEdits((e) => ({ ...e, description: newValue }));
-                  }}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Website</label>
-              <div className="control">
-                <input
-                  type="text"
-                  className="input"
-                  value={edits.website}
-                  placeholder="Put a valid URL here."
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setEdits((e) => ({ ...e, website: newValue }));
-                  }}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Filters</label>
-            </div>
-            <div className="field is-horizontal">
-              <label className="label field-label is-small">Age</label>
-              <div className="field-body">
-                <div className="field has-addons">
+      <div className="modal is-active">
+        <div className="modal-background"></div>
+        <div className="modal-content">
+          <div className="box">
+            <div className="columns is-multiline is-mobile">
+              <div className="column is-12">
+                <div className="field">
+                  <label className="label">Title</label>
                   <div className="control">
                     <input
                       type="text"
-                      className="input is-small"
-                      value={edits.filters.minAge || ""}
-                      placeholder="minimum age"
+                      className="input title is-6"
+                      value={edits.title}
+                      placeholder="Title"
                       onChange={(e) => {
-                        const newValue =
-                          e.target.value === ""
-                            ? null
-                            : isNaN(+e.target.value)
-                            ? null
-                            : +e.target.value;
-                        setEdit("minAge", newValue);
-                      }}
-                    />
-                  </div>
-                  <button className="button is-static is-small">to</button>
-                  <div className="control">
-                    <input
-                      type="text"
-                      className="input is-small"
-                      value={edits.filters.maxAge || ""}
-                      placeholder="maximum age"
-                      onChange={(e) => {
-                        const newValue =
-                          e.target.value === ""
-                            ? null
-                            : isNaN(+e.target.value)
-                            ? null
-                            : +e.target.value;
-                        setEdit("maxAge", newValue);
+                        const newValue = e.target.value;
+                        setEdits((e) => ({ ...e, title: newValue }));
                       }}
                     />
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="field is-horizontal">
-              <label className="label field-label is-small">Attributes</label>
-              <div className="field-body">
-                <div className="buttons">
-                  {attributes.map(({ display, value }) => {
-                    return (
-                      <button
-                        className={`button is-small is-rounded ${
-                          edits.filters[value]
-                            ? "is-success"
-                            : edits.filters.attributeCount
-                            ? "is-light"
-                            : ""
-                        }`}
-                        onClick={() => {
-                          toggleAttribute(value);
-                        }}
-                      >
-                        {display}
+                <div className="field">
+                  <label className="label">Description</label>
+                  <div className="control">
+                    <input
+                      type="text"
+                      className="input"
+                      value={edits.description}
+                      placeholder="Description here"
+                      onChange={(e) => {
+                        const newValue = e.target.value;
+                        setEdits((e) => ({ ...e, description: newValue }));
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Website</label>
+                  <div className="control">
+                    <input
+                      type="text"
+                      className="input"
+                      value={edits.website}
+                      placeholder="Put a valid URL here."
+                      onChange={(e) => {
+                        const newValue = e.target.value;
+                        setEdits((e) => ({ ...e, website: newValue }));
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label className="label">Filters</label>
+                </div>
+                <div className="field is-horizontal">
+                  <label className="label field-label is-small">Age</label>
+                  <div className="field-body">
+                    <div className="field has-addons">
+                      <div className="control">
+                        <input
+                          type="text"
+                          className="input is-small"
+                          value={edits.filters.minAge || ""}
+                          placeholder="minimum age"
+                          onChange={(e) => {
+                            const newValue =
+                              e.target.value === ""
+                                ? null
+                                : isNaN(+e.target.value)
+                                ? null
+                                : +e.target.value;
+                            setEdit("minAge", newValue);
+                          }}
+                        />
+                      </div>
+                      <button className="button is-static is-small">to</button>
+                      <div className="control">
+                        <input
+                          type="text"
+                          className="input is-small"
+                          value={edits.filters.maxAge || ""}
+                          placeholder="maximum age"
+                          onChange={(e) => {
+                            const newValue =
+                              e.target.value === ""
+                                ? null
+                                : isNaN(+e.target.value)
+                                ? null
+                                : +e.target.value;
+                            setEdit("maxAge", newValue);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="field is-horizontal">
+                  <label className="label field-label is-small">
+                    Attributes
+                  </label>
+                  <div className="field-body">
+                    <div className="buttons">
+                      {attributes.map(({ display, value }) => {
+                        return (
+                          <button
+                            className={`button is-small is-rounded ${
+                              edits.filters[value]
+                                ? "is-success"
+                                : edits.filters.attributeCount
+                                ? "is-light"
+                                : ""
+                            }`}
+                            onClick={() => {
+                              toggleAttribute(value);
+                            }}
+                          >
+                            {display}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <div className="field is-horizontal">
+                  <label className="label field-label is-small">
+                    Job hours
+                  </label>
+                  <div className="field-body">
+                    <div className="buttons">
+                      {employmentHoursEnum.map(({ display, value }) => {
+                        if (!value) {
+                          return null;
+                        }
+                        return (
+                          <button
+                            className={`button is-small is-rounded ${
+                              edits.filters.employmentHours.indexOf(value) > -1
+                                ? "is-success"
+                                : ""
+                            }`}
+                            onClick={() => {
+                              toggleEnumFilter("employmentHours", value);
+                            }}
+                          >
+                            {display}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <div className="field is-horizontal">
+                  <label className="label field-label is-small">
+                    Job status
+                  </label>
+                  <div className="field-body">
+                    <div className="buttons">
+                      {employmentStatusEnum.map(({ display, value }) => {
+                        if (!value) {
+                          return null;
+                        }
+                        return (
+                          <button
+                            className={`button is-small is-rounded ${
+                              edits.filters.employmentStatus.indexOf(value) > -1
+                                ? "is-success"
+                                : ""
+                            }`}
+                            onClick={() => {
+                              toggleEnumFilter("employmentStatus", value);
+                            }}
+                          >
+                            {display}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+                <div className="field is-horizontal">
+                  <label className="label field-label is-small">Income</label>
+                  <div className="field-body">
+                    <div className="field has-addons">
+                      <button className="button is-static is-small">$</button>
+                      <div className="control">
+                        <input
+                          type="text"
+                          className="input is-small"
+                          value={edits.filters.minIncome || ""}
+                          placeholder="minimum income"
+                          onChange={(e) => {
+                            const newValue =
+                              e.target.value === ""
+                                ? null
+                                : isNaN(+e.target.value)
+                                ? null
+                                : +e.target.value;
+                            setEdit("minIncome", newValue);
+                          }}
+                        />
+                      </div>
+                      <button className="button is-static is-small">
+                        to $
                       </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-            <div className="field is-horizontal">
-              <label className="label field-label is-small">Job hours</label>
-              <div className="field-body">
-                <div className="buttons">
-                  {employmentHoursEnum.map(({ display, value }) => {
-                    if (!value) {
-                      return null;
-                    }
-                    return (
-                      <button
-                        className={`button is-small is-rounded ${
-                          edits.filters.employmentHours.indexOf(value) > -1
-                            ? "is-success"
-                            : ""
-                        }`}
-                        onClick={() => {
-                          toggleEnumFilter("employmentHours", value);
-                        }}
-                      >
-                        {display}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-            <div className="field is-horizontal">
-              <label className="label field-label is-small">Job status</label>
-              <div className="field-body">
-                <div className="buttons">
-                  {employmentStatusEnum.map(({ display, value }) => {
-                    if (!value) {
-                      return null;
-                    }
-                    return (
-                      <button
-                        className={`button is-small is-rounded ${
-                          edits.filters.employmentStatus.indexOf(value) > -1
-                            ? "is-success"
-                            : ""
-                        }`}
-                        onClick={() => {
-                          toggleEnumFilter("employmentStatus", value);
-                        }}
-                      >
-                        {display}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-            <div className="field is-horizontal">
-              <label className="label field-label is-small">Income</label>
-              <div className="field-body">
-                <div className="field has-addons">
-                  <button className="button is-static is-small">$</button>
-                  <div className="control">
-                    <input
-                      type="text"
-                      className="input is-small"
-                      value={edits.filters.minIncome || ""}
-                      placeholder="minimum income"
-                      onChange={(e) => {
-                        const newValue =
-                          e.target.value === ""
-                            ? null
-                            : isNaN(+e.target.value)
-                            ? null
-                            : +e.target.value;
-                        setEdit("minIncome", newValue);
-                      }}
-                    />
-                  </div>
-                  <button className="button is-static is-small">to $</button>
-                  <div className="control">
-                    <input
-                      type="text"
-                      className="input is-small"
-                      value={edits.filters.maxIncome || ""}
-                      placeholder="maximum income"
-                      onChange={(e) => {
-                        const newValue =
-                          e.target.value === ""
-                            ? null
-                            : isNaN(+e.target.value)
-                            ? null
-                            : +e.target.value;
-                        setEdit("maxIncome", newValue);
-                      }}
-                    />
+                      <div className="control">
+                        <input
+                          type="text"
+                          className="input is-small"
+                          value={edits.filters.maxIncome || ""}
+                          placeholder="maximum income"
+                          onChange={(e) => {
+                            const newValue =
+                              e.target.value === ""
+                                ? null
+                                : isNaN(+e.target.value)
+                                ? null
+                                : +e.target.value;
+                            setEdit("maxIncome", newValue);
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div className="column is-6">
+                <button
+                  className="button is-fullwidth is-success is-light"
+                  onClick={() => {
+                    onSaveEdit({ id: before ? before._id : null, ...edits });
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+              <div className="column is-6">
+                <button
+                  className="button is-fullwidth is-light"
+                  onClick={stopEdit}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="column is-6">
-            <button
-              className="button is-fullwidth is-success is-light"
-              onClick={() => {
-                onSaveEdit({ id: before ? before._id : null, ...edits });
-              }}
-            >
-              Save
-            </button>
-          </div>
-          <div className="column is-6">
-            <button className="button is-fullwidth is-light" onClick={stopEdit}>
-              Cancel
-            </button>
           </div>
         </div>
+        <div className="modal-close is-large"></div>
       </div>
     );
   }
@@ -348,7 +365,7 @@ export const EditableBulletin = ({ before, onSaveEdit, isNew }) => {
           </button>
         </div>
         <div className="column is-6">
-          <button className="button is-fullwidth is-danger" onClick={startEdit}>
+          <button className="button is-fullwidth is-danger" onClick={onRemove}>
             Remove
           </button>
         </div>

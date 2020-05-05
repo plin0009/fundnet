@@ -1,19 +1,26 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { GET_ORG_ME, CHANGE_BULLETIN, ADD_BULLETIN } from "../queries";
+import {
+  GET_ORG_ME,
+  CHANGE_BULLETIN,
+  ADD_BULLETIN,
+  REMOVE_BULLETIN,
+} from "../queries";
 import { EditableBulletin } from "../components/Bulletin";
+import Tiles from "../components/Tiles";
 
 const OrgMe = ({ history }) => {
-  const { loading, error, data } = useQuery(GET_ORG_ME);
+  const { data } = useQuery(GET_ORG_ME);
   const [changeBulletin] = useMutation(CHANGE_BULLETIN);
   const [addBulletin] = useMutation(ADD_BULLETIN);
+  const [removeBulletin, { error }] = useMutation(REMOVE_BULLETIN);
   const { bulletins, name, handle, website } = (data && data.orgMe) || {
     bulletins: [],
     name: "",
     handle: "",
     website: "",
   };
-  console.log(bulletins);
+  console.log({ ...error });
   const addNewBulletin = async ({ title, description, website, filters }) => {
     console.log(`adding bulletin`);
     await addBulletin({
@@ -47,16 +54,24 @@ const OrgMe = ({ history }) => {
             </div>
           </div>
           <h2 className="title is-4">My bulletins</h2>
-          <div className="columns is-multiline">
-            {bulletins.map((bulletin) => (
-              <div className="column is-4" key={bulletin._id}>
-                <EditableBulletin before={bulletin} onSaveEdit={editBulletin} />
-              </div>
-            ))}
-            <div className="column is-4">
-              <EditableBulletin onSaveEdit={addNewBulletin} isNew={true} />
-            </div>
-          </div>
+          <Tiles>
+            {[
+              ...bulletins.map((bulletin) => (
+                <EditableBulletin
+                  before={bulletin}
+                  onSaveEdit={editBulletin}
+                  onRemove={() =>
+                    removeBulletin({
+                      variables: {
+                        id: bulletin._id,
+                      },
+                    })
+                  }
+                />
+              )),
+              <EditableBulletin isNew={true} />,
+            ]}
+          </Tiles>
         </div>
       </section>
     </main>
