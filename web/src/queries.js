@@ -117,6 +117,13 @@ export const CHANGE_BULLETIN = gql`
   }
 `;
 
+export const REMOVE_BULLETIN = gql`
+  mutation RemoveBulletin($id: ID!) {
+    removeBulletin(id: $id) {
+      _id
+    }
+  }
+`;
 export const ADD_BULLETIN = gql`
   mutation AddBulletin(
     $title: String!
