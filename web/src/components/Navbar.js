@@ -6,7 +6,14 @@ import { GET_ME, GET_ORG_ME } from "../queries";
 const Navbar = () => {
   const { data } = useQuery(GET_ME);
   const { data: orgData } = useQuery(GET_ORG_ME);
-  const me = (data && data.me) || (orgData && orgData.orgMe) || null;
+  let me = null;
+  let isOrg = false;
+  if (data && data.me) {
+    me = data.me;
+  } else if (orgData && orgData.orgMe) {
+    me = orgData.orgMe;
+    isOrg = true;
+  }
   const [expanded, setExpanded] = useState(false);
   return (
     <nav className="navbar has-shadow">
@@ -59,7 +66,7 @@ const Navbar = () => {
             {me ? (
               <div className="navbar-item">
                 <Link
-                  to="/me"
+                  to={isOrg ? "/org/me" : "/me"}
                   className="is-flex"
                   style={{ alignItems: "center" }}
                 >
