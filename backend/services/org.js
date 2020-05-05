@@ -21,6 +21,7 @@ const typeDefs = gql`
       filters: String
     ): Bulletin
     changeBulletin(id: ID!, changes: String!): Bulletin
+    removeBulletin(id: ID!): Bulletin
   }
   type AuthPayload {
     token: String
@@ -106,10 +107,31 @@ const resolvers = {
       if (!bulletin) {
         return null;
       }
+      if (bulletin.creator._id.toString() !== me.id) {
+        console.log(`${bulletin.creator._id.toString()} !== ${me.id}`);
+        return null;
+      }
       await bulletin.update({
         ...JSON.parse(changes),
       });
       return bulletin;
+    },
+    removeBulletin: async (_, { id }, { me }) => {
+      if (!me.id) {
+        return null;
+      }
+      const bulletin = await Bulletin.findById(id);
+      if (!bulletin) {
+        return null;
+      }
+      if (bulletin.creator._id.toString() !== me.id) {
+        console.log(`${bulletin.creator._id.toString()} !== ${me.id}`);
+        return null;
+      }
+      const org = await Org.findById(me.id);
+      console.log(org.bulletins.splice(org.bulletins.indexOf(id), 1));
+      await org.save();
+      return await bulletin.remove();
     },
   },
   Org: {
