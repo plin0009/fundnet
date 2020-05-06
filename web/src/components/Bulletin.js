@@ -16,7 +16,6 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
             filters: {
               employmentHours: [],
               employmentStatus: [],
-              attributeCount: 0,
             },
           }
         : before
@@ -26,23 +25,18 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
 
   const toggleAttribute = (filter) => {
     setEdits((e) => {
-      if (e.filters[filter]) {
-        const deletedFromFilters = { ...e.filters };
-        delete deletedFromFilters[filter];
-        deletedFromFilters.attributeCount--;
-        return {
-          ...e,
-          filters: {
-            ...deletedFromFilters,
-          },
-        };
+      let change = "UNSPECIFIED";
+      if (e.filters[filter] === "YES") {
+        change = "NO";
+      }
+      if (e.filters[filter] === "UNSPECIFIED") {
+        change = "YES";
       }
       return {
         ...e,
         filters: {
           ...e.filters,
-          [filter]: true,
-          attributeCount: e.filters.attributeCount + 1,
+          [filter]: change,
         },
       };
     });
@@ -94,9 +88,12 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
   if (editing) {
     return (
       <div className="modal is-active">
-        <div className="modal-background"></div>
+        <div className="modal-background" onClick={stopEdit}></div>
         <div className="modal-content">
           <div className="box">
+            <h1 className="title">
+              {isNew ? "Create a new" : "Edit this"} bulletin
+            </h1>
             <div className="columns is-multiline is-mobile">
               <div className="column is-12">
                 <div className="field">
@@ -198,11 +195,11 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
                       {attributes.map(({ display, value }) => {
                         return (
                           <button
-                            className={`button is-small is-rounded ${
-                              edits.filters[value]
+                            className={`button is-small is-rounded is-light ${
+                              edits.filters[value] === "YES"
                                 ? "is-success"
-                                : edits.filters.attributeCount
-                                ? "is-light"
+                                : edits.filters[value] === "NO"
+                                ? "is-danger"
                                 : ""
                             }`}
                             onClick={() => {
@@ -339,7 +336,7 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
             </div>
           </div>
         </div>
-        <div className="modal-close is-large"></div>
+        <button className="modal-close is-large" onClick={stopEdit}></button>
       </div>
     );
   }

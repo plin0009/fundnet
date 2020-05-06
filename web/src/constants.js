@@ -1,5 +1,5 @@
 export const employmentStatusEnum = [
-  { display: "Unspecified", value: null },
+  { display: "Unspecified", value: "UNSPECIFIED" },
   { display: "Employee", value: "EMPLOYEE" },
   { display: "Worker", value: "WORKER" },
   {
@@ -11,7 +11,7 @@ export const employmentStatusEnum = [
 ];
 
 export const employmentHoursEnum = [
-  { display: "Unspecified", value: null },
+  { display: "Unspecified", value: "UNSPECIFIED" },
   {
     display: "Full-time",
     value: "FULL_TIME",

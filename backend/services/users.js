@@ -32,26 +32,33 @@ const typeDefs = gql`
     minAge: Int
     maxAge: Int
 
-    homeOwner: Boolean
-    autoOwner: Boolean
-    student: Boolean
-    veteran: Boolean
-    pregnant: Boolean
-    parent: Boolean
-    physicalCondition: Boolean
-    mentalCondition: Boolean
+    homeOwner: Attribute
+    autoOwner: Attribute
+    student: Attribute
+    veteran: Attribute
+    pregnant: Attribute
+    parent: Attribute
+    physicalCondition: Attribute
+    mentalCondition: Attribute
 
-    employmentHours: EmploymentHours
-    employmentStatus: EmploymentStatus
+    employmentHours: EmploymentHours!
+    employmentStatus: EmploymentStatus!
     income: Int
     bulletins: [Bulletin!]!
   }
+  enum Attribute {
+    UNSPECIFIED
+    YES
+    NO
+  }
   enum EmploymentHours {
+    UNSPECIFIED
     FULL_TIME
     PART_TIME
     OTHER
   }
   enum EmploymentStatus {
+    UNSPECIFIED
     EMPLOYEE
     WORKER
     SELF_EMPLOYED

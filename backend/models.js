@@ -11,14 +11,14 @@ const bulletinSchema = {
     minAge: Number,
     maxAge: Number,
 
-    homeOwner: Boolean,
-    autoOwner: Boolean,
-    student: Boolean,
-    veteran: Boolean,
-    pregnant: Boolean,
-    parent: Boolean,
-    physicalCondition: Boolean,
-    mentalCondition: Boolean,
+    homeOwner: String,
+    autoOwner: String,
+    student: String,
+    veteran: String,
+    pregnant: String,
+    parent: String,
+    physicalCondition: String,
+    mentalCondition: String,
 
     employmentHours: [
       {
@@ -48,14 +48,14 @@ export const User = mongoose.model(
     minAge: Number,
     maxAge: Number,
 
-    homeOwner: Boolean,
-    autoOwner: Boolean,
-    student: Boolean,
-    veteran: Boolean,
-    pregnant: Boolean,
-    parent: Boolean,
-    physicalCondition: Boolean,
-    mentalCondition: Boolean,
+    homeOwner: String,
+    autoOwner: String,
+    student: String,
+    veteran: String,
+    pregnant: String,
+    parent: String,
+    physicalCondition: String,
+    mentalCondition: String,
 
     employmentHours: {
       type: String,

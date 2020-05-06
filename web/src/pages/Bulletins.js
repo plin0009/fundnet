@@ -11,7 +11,6 @@ const Bulletins = () => {
 
   const [filtering, setFiltering] = useState(false);
   const me = (meData && meData.me) || null;
-  console.log(me);
 
   const bulletins = data ? data.bulletins : [];
   return (
@@ -63,9 +62,9 @@ const Bulletins = () => {
                   console.log(bulletin.filters);
                   for (let i = 0; i < attributes.length; i++) {
                     const value = attributes[i].value;
-                    if (bulletin.filters[value] === false && me[value] === true)
+                    if (bulletin.filters[value] === "NO" && me[value] === "YES")
                       return null;
-                    if (bulletin.filters[value] === true && !me[value])
+                    if (bulletin.filters[value] === "YES" && me[value] === "NO")
                       return null;
                   }
                   if (

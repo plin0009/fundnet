@@ -10,7 +10,14 @@ import {
 const Me = ({ history }) => {
   const { client, loading, error, data } = useQuery(GET_ME);
   // console.log(loading, error, data);
-  const [changeMe] = useMutation(CHANGE_ME);
+  const [changeMe] = useMutation(CHANGE_ME, {
+    update: (cache, result) => {
+      cache.writeQuery({
+        query: GET_ME,
+        data: result.data.changeMe,
+      });
+    },
+  });
 
   const [ageEdits, setAgeEdits] = useState(null);
   const [attributeEdits, setAttributeEdits] = useState(null);
@@ -29,7 +36,7 @@ const Me = ({ history }) => {
       setAttributeEdits(() => {
         const newEdits = {};
         attributes.forEach(({ value }) => {
-          newEdits[value] = !!data.me[value];
+          newEdits[value] = data.me[value];
         });
         return newEdits;
       });
@@ -47,7 +54,6 @@ const Me = ({ history }) => {
       ...attributeEdits,
     });
     const response = await saveChanges(changes);
-    console.log(response);
   };
 
   const saveEmployment = async () => {
@@ -296,14 +302,21 @@ const Me = ({ history }) => {
                               onClick={() => {
                                 setAttributeEdits((a) => ({
                                   ...a,
-                                  [attribute.value]: !a[attribute.value],
+                                  [attribute.value]:
+                                    a[attribute.value] === "YES"
+                                      ? "NO"
+                                      : a[attribute.value] === "NO"
+                                      ? "UNSPECIFIED"
+                                      : "YES",
                                 }));
                               }}
-                              className={`button is-rounded ${
+                              className={`button is-rounded is-light ${
                                 attributeEdits &&
-                                attributeEdits[attribute.value]
+                                (attributeEdits[attribute.value] === "YES"
                                   ? "is-success"
-                                  : "is-light"
+                                  : attributeEdits[attribute.value] === "NO"
+                                  ? "is-danger"
+                                  : "is-light")
                               }`}
                             >
                               {attribute.display}
