@@ -196,7 +196,7 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
                       {attributes.map(({ display, value }) => {
                         return (
                           <button
-                            className={`button is-small is-rounded is-light ${
+                            className={`button is-small is-rounded ${
                               edits.filters[value] === "YES"
                                 ? "is-success"
                                 : edits.filters[value] === "NO"
@@ -228,8 +228,8 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
                           <button
                             className={`button is-small is-rounded ${
                               edits.filters.employmentHours.indexOf(value) > -1
-                                ? "is-success"
-                                : ""
+                                ? "is-danger"
+                                : "is-success"
                             }`}
                             onClick={() => {
                               toggleEnumFilter("employmentHours", value);
@@ -256,8 +256,8 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
                           <button
                             className={`button is-small is-rounded ${
                               edits.filters.employmentStatus.indexOf(value) > -1
-                                ? "is-success"
-                                : ""
+                                ? "is-danger"
+                                : "is-success"
                             }`}
                             onClick={() => {
                               toggleEnumFilter("employmentStatus", value);
@@ -318,7 +318,7 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
               </div>
               <div className="column is-6">
                 <button
-                  className="button is-fullwidth is-success is-light"
+                  className="button is-fullwidth is-success"
                   onClick={() => {
                     onSaveEdit({ id: before ? before._id : null, ...edits });
                   }}
@@ -327,17 +327,13 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
                 </button>
               </div>
               <div className="column is-6">
-                <button
-                  className="button is-fullwidth is-light"
-                  onClick={stopEdit}
-                >
+                <button className="button is-fullwidth" onClick={stopEdit}>
                   Cancel
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <button className="modal-close is-large" onClick={stopEdit}></button>
       </div>
     );
   }

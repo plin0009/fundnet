@@ -59,7 +59,7 @@ const Bulletins = () => {
                     me.income < bulletin.filters.minIncome
                   )
                     return null;
-                  console.log(bulletin.filters);
+                  // console.log(bulletin.filters);
                   for (let i = 0; i < attributes.length; i++) {
                     const value = attributes[i].value;
                     if (bulletin.filters[value] === "NO" && me[value] === "YES")
@@ -68,19 +68,19 @@ const Bulletins = () => {
                       return null;
                   }
                   if (
+                    bulletin.filters.employmentHours.length &&
                     bulletin.filters.employmentHours.indexOf(
                       me.employmentHours
-                    ) === -1 &&
-                    bulletin.filters.employmentHours.length &&
+                    ) !== -1 &&
                     me.employmentHours
                   ) {
                     return null;
                   }
                   if (
+                    bulletin.filters.employmentStatus.length &&
                     bulletin.filters.employmentStatus.indexOf(
                       me.employmentStatus
-                    ) === -1 &&
-                    bulletin.filters.employmentStatus.length &&
+                    ) !== -1 &&
                     me.employmentStatus
                   ) {
                     return null;
