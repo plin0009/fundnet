@@ -41,15 +41,25 @@ const OrgMe = ({ history }) => {
     <main>
       <section className="section">
         <div className="container">
-          <h1 className="title">Organization Dashboard</h1>
-          <div className="box">
-            <div className="columns">
-              <div className="column">
-                <h1 className="subtitle is-2 has-text-centered">
-                  {name ? `Welcome, ${name}!` : "Welcome!"}
-                </h1>
-              </div>
+          <div className="columns is-multiline">
+            <div className="column is-12">
+              <h1 className="subtitle is-2 has-text-centered">
+                {name ? `Welcome, ${name}!` : "Welcome!"}
+              </h1>
             </div>
+          </div>
+          <div className="tabs is-boxed">
+            <ul>
+              <li className="is-active">
+                <a>Manage bulletins</a>
+              </li>
+              <li>
+                <a>Manage job postings</a>
+              </li>
+              <li>
+                <a>Edit account</a>
+              </li>
+            </ul>
           </div>
           <h2 className="title is-4">My bulletins</h2>
           <Tiles>

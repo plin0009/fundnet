@@ -16,7 +16,7 @@ const Navbar = () => {
   }
   const [expanded, setExpanded] = useState(false);
   return (
-    <nav className="navbar has-shadow">
+    <nav className="navbar has-box-shadow is-fixed-top">
       <div className="container">
         <div className="navbar-brand">
           <Link

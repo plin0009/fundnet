@@ -145,7 +145,7 @@ const Me = ({ history }) => {
                       </div>
                       <div className="column is-narrow">
                         <button
-                          className="button is-success is-light"
+                          className="button is-success"
                           onClick={saveEmployment}
                         >
                           Save changes
@@ -270,7 +270,7 @@ const Me = ({ history }) => {
                       </div>
                       <div className="column is-narrow">
                         <div
-                          className="button is-success is-light"
+                          className="button is-success"
                           onClick={saveBasicInfo}
                         >
                           Save changes
@@ -310,13 +310,13 @@ const Me = ({ history }) => {
                                       : "YES",
                                 }));
                               }}
-                              className={`button is-rounded is-light ${
+                              className={`button is-rounded ${
                                 attributeEdits &&
                                 (attributeEdits[attribute.value] === "YES"
                                   ? "is-success"
                                   : attributeEdits[attribute.value] === "NO"
                                   ? "is-danger"
-                                  : "is-light")
+                                  : "")
                               }`}
                             >
                               {attribute.display}
@@ -336,7 +336,7 @@ const Me = ({ history }) => {
                       </div>
                       <div className="column is-narrow">
                         <button
-                          className="button is-success is-light"
+                          className="button is-success"
                           onClick={saveJobFinding}
                         >
                           Save changes
