@@ -20,9 +20,7 @@ const OrgMe = ({ history }) => {
     handle: "",
     website: "",
   };
-  console.log({ ...error });
   const addNewBulletin = async ({ title, description, website, filters }) => {
-    console.log(`adding bulletin`);
     await addBulletin({
       variables: {
         title,
@@ -69,7 +67,7 @@ const OrgMe = ({ history }) => {
                   }
                 />
               )),
-              <EditableBulletin isNew={true} />,
+              <EditableBulletin isNew={true} onSaveEdit={addNewBulletin} />,
             ]}
           </Tiles>
         </div>

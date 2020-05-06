@@ -28,8 +28,9 @@ export const EditableBulletin = ({ before, onSaveEdit, onRemove, isNew }) => {
       let change = "UNSPECIFIED";
       if (e.filters[filter] === "YES") {
         change = "NO";
-      }
-      if (e.filters[filter] === "UNSPECIFIED") {
+      } else if (e.filters[filter] === "NO") {
+        change = "UNSPECIFIED";
+      } else {
         change = "YES";
       }
       return {
