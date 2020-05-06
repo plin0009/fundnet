@@ -16,7 +16,6 @@ const clientPort = 3000;
 class CookieDataSource extends RemoteGraphQLDataSource {
   willSendRequest({ request, context }) {
     if (context.user) {
-      console.log("setting cookie");
       request.http.headers.set("x-user-id", context.user.id);
     }
     if (context.org) {
@@ -51,10 +50,19 @@ class CookieDataSource extends RemoteGraphQLDataSource {
           token = response.data.orgLogin.token;
           response.data.orgLogin.token = "Set as cookie";
         }
+      } else if (response.data.logout) {
+        context.res.cookie(`user-jwt`, "", {
+          httpOnly: true,
+          expiresIn: Date.now() - 900000,
+        });
+      } else if (response.data.orgLogout) {
+        context.res.cookie(`org-jwt`, "", {
+          httpOnly: true,
+          expiresIn: Date.now() - 900000,
+        });
       }
     }
     if (token) {
-      console.log("storing cookies");
       context.res.cookie(`${type}-jwt`, token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 2,
@@ -82,13 +90,10 @@ class CookieDataSource extends RemoteGraphQLDataSource {
       let org = null;
       if (req.cookies) {
         if (req.cookies["user-jwt"]) {
-          console.log("setting cookie first");
           user = jwt.verify(req.cookies["user-jwt"], secret);
-          console.log(user);
         }
         if (req.cookies["org-jwt"]) {
           org = jwt.verify(req.cookies["org-jwt"], secret);
-          console.log(org);
         }
       }
       return { res, user, org };
