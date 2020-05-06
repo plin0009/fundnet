@@ -12,6 +12,7 @@ import OrgLogin from "./pages/OrgLogin";
 import OrgMe from "./pages/OrgMe";
 import Bulletins from "./pages/Bulletins";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/bulletins" exact component={Bulletins} />
         <Route path="/" component={NotFound} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }

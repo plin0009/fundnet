@@ -4,13 +4,17 @@ $dark-blue: #0024a2;
 $light-blue: #165bdf;
 $dark-green: #3d7a40;
 $forest-green: #63f06a;
+$light-light-blue: #c0fdf2;
+
+// $white-bis: $light-light-blue;
 
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;700&display=swap");
 $family-sans-serif: "Jost", "Helvetica", "Arial", sans-serif;
 
 $grey-darker: $dark-blue;
 $grey-dark: $light-blue;
-$body-background-color: #12ceb244;
+$body-background-color: $light-light-blue;
+$footer-background-color: $light-light-blue;
 
 $body-overflow-y: auto;
 $navbar-height: 4rem;
@@ -18,3 +22,26 @@ $primary: $dark-blue;
 $success: $forest-green;
 $link: $dark-green;
 @import "../node_modules/bulma/bulma.sass";
+
+.box.is-fullheight {
+  height: 100%;
+}
+img.is-square {
+  max-width: 100%;
+  max-height: 100%;
+}
+.img-wrapper {
+  width: 80%;
+  margin: 10%;
+  height: 0;
+  padding-top: 80%;
+  position: relative;
+}
+.img-frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+}
