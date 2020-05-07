@@ -44,7 +44,29 @@ const typeDefs = gql`
     employmentHours: EmploymentHours!
     employmentStatus: EmploymentStatus!
     income: Int
+
+    location: Location
+    availability: Availability
+
     bulletins: [Bulletin!]!
+  }
+  type Location {
+    coords: [Int!]!
+    name: String!
+  }
+  type Availability {
+    sun: [TimeOfDay!]
+    mon: [TimeOfDay!]
+    tue: [TimeOfDay!]
+    wed: [TimeOfDay!]
+    thu: [TimeOfDay!]
+    fri: [TimeOfDay!]
+    sat: [TimeOfDay!]
+  }
+  enum TimeOfDay {
+    MORNING
+    AFTERNOON
+    EVENING
   }
   enum Attribute {
     UNSPECIFIED
@@ -83,7 +105,7 @@ const resolvers = {
       if (!me.id) {
         return allBulletins;
       }
-      return allBulletins; //.filt()
+      return allBulletins;
     },
   },
   Mutation: {
@@ -137,7 +159,7 @@ const resolvers = {
         // no
         return null;
       }
-      const updated = await user.update(JSON.parse(changes));
+      /* const updated =  */ await user.update(JSON.parse(changes));
       return user;
     },
     logout: () => true,

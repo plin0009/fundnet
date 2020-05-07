@@ -22,11 +22,23 @@ const typeDefs = gql`
     ): Bulletin
     changeBulletin(id: ID!, changes: String!): Bulletin
     removeBulletin(id: ID!): Bulletin
+
+    addPosting(
+      title: String!
+      description: String
+      website: String
+      filters: String
+    ): Posting
+    changePosting(id: ID!, changes: String!): Posting
+    removePosting(id: ID!): Posting
   }
   type AuthPayload {
     token: String
   }
   extend type Bulletin @key(fields: "_id") {
+    _id: ID! @external
+  }
+  extend type Posting @key(fields: "_id") {
     _id: ID! @external
   }
   type Org @key(fields: "_id") {
@@ -133,6 +145,9 @@ const resolvers = {
       await org.save();
       return await bulletin.remove();
     },
+    addPosting: async () => {},
+    changePosting: async () => {},
+    removePosting: async () => {},
   },
   Org: {
     __resolveReference: async ({ _id }) => {
