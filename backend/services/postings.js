@@ -51,7 +51,7 @@ const resolvers = {
       if (data && data.results) {
         return data.results.map((result) => ({
           coords: [result.latitude, result.longitude],
-          name,
+          name: result.name,
         }));
       }
       return [];
