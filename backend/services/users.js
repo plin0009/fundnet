@@ -51,22 +51,22 @@ const typeDefs = gql`
     bulletins: [Bulletin!]!
   }
   type Location {
-    coords: [Int!]!
+    coords: [Float!]!
     name: String!
   }
   type Availability {
-    sun: [TimeOfDay!]
-    mon: [TimeOfDay!]
-    tue: [TimeOfDay!]
-    wed: [TimeOfDay!]
-    thu: [TimeOfDay!]
-    fri: [TimeOfDay!]
-    sat: [TimeOfDay!]
+    sun: TimeOfDay
+    mon: TimeOfDay
+    tue: TimeOfDay
+    wed: TimeOfDay
+    thu: TimeOfDay
+    fri: TimeOfDay
+    sat: TimeOfDay
   }
-  enum TimeOfDay {
-    MORNING
-    AFTERNOON
-    EVENING
+  type TimeOfDay {
+    morning: Attribute
+    afternoon: Attribute
+    evening: Attribute
   }
   enum Attribute {
     UNSPECIFIED
@@ -159,7 +159,9 @@ const resolvers = {
         // no
         return null;
       }
-      /* const updated =  */ await user.update(JSON.parse(changes));
+      console.log(changes);
+      const updated = await user.update(JSON.parse(changes));
+      console.log(user);
       return user;
     },
     logout: () => true,

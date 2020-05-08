@@ -48,6 +48,7 @@ const typeDefs = gql`
     name: String
     website: String
     bulletins: [Bulletin!]!
+    postings: [Posting!]!
   }
 `;
 const resolvers = {

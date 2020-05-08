@@ -48,6 +48,53 @@ export const GET_ME = gql`
       employmentHours
       employmentStatus
       income
+
+      location {
+        coords
+        name
+      }
+      availability {
+        sun {
+          morning
+          afternoon
+          evening
+        }
+        mon {
+          morning
+          afternoon
+          evening
+        }
+        tue {
+          morning
+          afternoon
+          evening
+        }
+        wed {
+          morning
+          afternoon
+          evening
+        }
+        thu {
+          morning
+          afternoon
+          evening
+        }
+        fri {
+          morning
+          afternoon
+          evening
+        }
+        sat {
+          morning
+          afternoon
+          evening
+        }
+        sun {
+          morning
+          afternoon
+          evening
+        }
+      }
     }
   }
 `;
@@ -82,6 +129,12 @@ export const GET_ORG_ME = gql`
           maxIncome
         }
       }
+      postings {
+        _id
+        title
+        description
+        website
+      }
     }
   }
 `;
@@ -105,6 +158,53 @@ export const CHANGE_ME = gql`
       employmentHours
       employmentStatus
       income
+
+      location {
+        coords
+        name
+      }
+      availability {
+        sun {
+          morning
+          afternoon
+          evening
+        }
+        mon {
+          morning
+          afternoon
+          evening
+        }
+        tue {
+          morning
+          afternoon
+          evening
+        }
+        wed {
+          morning
+          afternoon
+          evening
+        }
+        thu {
+          morning
+          afternoon
+          evening
+        }
+        fri {
+          morning
+          afternoon
+          evening
+        }
+        sat {
+          morning
+          afternoon
+          evening
+        }
+        sun {
+          morning
+          afternoon
+          evening
+        }
+      }
     }
   }
 `;
@@ -177,5 +277,14 @@ export const GET_BULLETINS = gql`
 export const LOGOUT = gql`
   mutation {
     logout
+  }
+`;
+
+export const GET_FORWARD_GEOCODE = gql`
+  query ForwardGeocode($input: String!) {
+    forwardGeocode(input: $input) {
+      coords
+      name
+    }
   }
 `;

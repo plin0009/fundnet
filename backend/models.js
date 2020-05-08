@@ -1,5 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
+const TimeOfDay = {
+  morning: String,
+  afternoon: String,
+  evening: String,
+};
 export const User = mongoose.model(
   "User",
   new Schema({
@@ -29,6 +34,22 @@ export const User = mongoose.model(
       enum: ["EMPLOYEE", "WORKER", "SELF_EMPLOYED", "UNEMPLOYED", "OTHER"],
     },
     income: Number,
+
+    location: {
+      coords: [Number],
+      name: String,
+    },
+    availability: {
+      sun: TimeOfDay,
+      mon: TimeOfDay,
+      tue: TimeOfDay,
+      wed: TimeOfDay,
+      thu: TimeOfDay,
+      fri: TimeOfDay,
+      sat: TimeOfDay,
+      sun: TimeOfDay,
+    },
+
     bulletins: [
       {
         type: Schema.Types.ObjectId,
@@ -48,6 +69,11 @@ export const Org = mongoose.model(
     name: String,
     website: String,
     bulletins: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
+    postings: [
       {
         type: Schema.Types.ObjectId,
       },
