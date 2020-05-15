@@ -14,7 +14,7 @@ import Bulletins from "./pages/Bulletins";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Navbar />
@@ -32,6 +32,6 @@ function App() {
       <Footer />
     </BrowserRouter>
   );
-}
+};
 
 export default App;
