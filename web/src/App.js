@@ -15,7 +15,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Postings from "./pages/Postings";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Navbar />
@@ -34,6 +34,6 @@ function App() {
       <Footer />
     </BrowserRouter>
   );
-}
+};
 
 export default App;
