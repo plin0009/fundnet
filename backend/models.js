@@ -49,12 +49,6 @@ export const User = mongoose.model(
       sat: TimeOfDay,
       sun: TimeOfDay,
     },
-
-    bulletins: [
-      {
-        type: Schema.Types.ObjectId,
-      },
-    ],
   })
 );
 
@@ -68,16 +62,8 @@ export const Org = mongoose.model(
     },
     name: String,
     website: String,
-    bulletins: [
-      {
-        type: Schema.Types.ObjectId,
-      },
-    ],
-    postings: [
-      {
-        type: Schema.Types.ObjectId,
-      },
-    ],
+    bulletins: [Schema.Types.ObjectId],
+    postings: [Schema.Types.ObjectId],
   })
 );
 
@@ -132,8 +118,22 @@ export const Posting = mongoose.model(
     website: String,
     filters: {
       // location, availability
-      point: [Number],
-      availability: String,
+      geofence: {
+        coords: [Number],
+        distance: Number,
+      },
+      availabilities: [
+        {
+          sun: TimeOfDay,
+          mon: TimeOfDay,
+          tue: TimeOfDay,
+          wed: TimeOfDay,
+          thu: TimeOfDay,
+          fri: TimeOfDay,
+          sat: TimeOfDay,
+          sun: TimeOfDay,
+        },
+      ],
     },
   })
 );

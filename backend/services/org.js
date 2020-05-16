@@ -1,6 +1,6 @@
 import { gql, ApolloServer } from "apollo-server-express";
 import { buildFederatedSchema } from "@apollo/federation";
-import { Org, Bulletin } from "../models";
+import { Org, Bulletin, Posting } from "../models";
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -146,9 +146,51 @@ const resolvers = {
       await org.save();
       return await bulletin.remove();
     },
-    addPosting: async () => {},
-    changePosting: async () => {},
-    removePosting: async () => {},
+    addPosting: async (_, { title, description, website, filters }, { me }) => {
+      if (!me.id) return null;
+      console.log(title, description, website, filters);
+      console.log(me.id);
+      const posting = new Posting({
+        creator: me.id,
+        title,
+        description,
+        website,
+        filters: JSON.parse(filters),
+      });
+      const org = await Org.findById(me.id);
+      console.log(org);
+      console.log(posting._id);
+      org.postings.push({ _id: posting._id });
+      console.log(org.postings);
+      try {
+        await org.save();
+      } catch (e) {
+        console.log(e);
+      }
+      console.log("org saved");
+      return await posting.save();
+    },
+    changePosting: async (_, { id, changes }, { me }) => {
+      if (!me.id) return null;
+      console.log(id, changes);
+      const posting = await Posting.findById(id);
+      if (!posting) return null;
+      if (posting.creator._id.toString() !== me.id) return null;
+      await posting.update({
+        ...JSON.parse(changes),
+      });
+      return posting;
+    },
+    removePosting: async (_, { id }, { me }) => {
+      if (!me.id) return null;
+      const posting = await Posting.findById(id);
+      if (!posting) return null;
+      if (posting.creator._id.toString !== me.id) return null;
+      const org = await Org.findById(me.id);
+      org.postings.splice(org.postings.indexOf(id), 1);
+      await org.save();
+      return await posting.remove();
+    },
   },
   Org: {
     __resolveReference: async ({ _id }) => {

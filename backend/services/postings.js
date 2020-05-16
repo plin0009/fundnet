@@ -1,11 +1,15 @@
 import { gql, ApolloServer } from "apollo-server-express";
 import { buildFederatedSchema } from "@apollo/federation";
 import { radarSecret } from "../config";
+import { Posting, Org } from "../models";
 
 const typeDefs = gql`
   # extend type Query {
   #   forwardGeocode(input: String!): [Location!]!
   # }
+  extend type Org @key(fields: "_id") {
+    _id: ID! @external
+  }
   type Location {
     coords: [Float!]!
     name: String!
@@ -13,6 +17,7 @@ const typeDefs = gql`
   type Posting @key(fields: "_id") {
     _id: ID!
     title: String!
+    creator: Org
     description: String
     website: String
     filters: PostingFilters!
@@ -22,8 +27,8 @@ const typeDefs = gql`
     availabilities: [Availability!]!
   }
   type Geofence {
-    coords: [Float!]!
-    distance: Int!
+    coords: [Float!]
+    distance: Int
   }
   type Availability {
     sun: TimeOfDay
@@ -71,6 +76,15 @@ const resolvers = {
       }
       return [];
     }, */
+  },
+  Posting: {
+    __resolveReference: async ({ _id }) => {
+      return await Posting.findById(_id);
+    },
+    creator: async ({ creator }) => {
+      const org = await Org.findById(creator._id);
+      if (org) return org;
+    },
   },
 };
 export const PostingsService = new ApolloServer({
