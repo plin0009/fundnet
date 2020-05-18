@@ -2,9 +2,9 @@ import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
+  Button,
   StatusBar,
 } from 'react-native';
 
@@ -14,30 +14,29 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <Text>FundNet</Text>
+      <SafeAreaView style={styles.wrapper}>
+        {global.HermesInternal == null ? null : (
+          <View style={styles.engine}>
+            <Text style={styles.footer}>Engine: Hermes</Text>
           </View>
-        </ScrollView>
+        )}
+        <View style={styles.body}>
+          <Text style={styles.text}>FundNet</Text>
+          <Button title="Click me" onPress={() => {}} />
+        </View>
       </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: '#fff',
+  wrapper: {
+    flex: 1,
   },
   body: {
-    backgroundColor: '#ff0',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   engine: {
     position: 'absolute',
@@ -45,6 +44,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     color: '#0009',
+  },
+  text: {
+    fontSize: 30,
   },
 });
 
