@@ -1,5 +1,5 @@
 import { gql, ApolloServer } from "apollo-server-express";
-import { User, Bulletin } from "../models";
+import { User, Bulletin, Posting } from "../models";
 import { buildFederatedSchema } from "@apollo/federation";
 
 import bcrypt from "bcrypt";
@@ -11,6 +11,7 @@ const typeDefs = gql`
     # users: [User]!
     me: User
     bulletins: [Bulletin!]!
+    postings: [Posting!]!
   }
   extend type Mutation {
     signup(handle: String!, pass: String!): AuthPayload
@@ -22,6 +23,9 @@ const typeDefs = gql`
     token: String
   }
   extend type Bulletin @key(fields: "_id") {
+    _id: ID! @external
+  }
+  extend type Posting @key(fields: "_id") {
     _id: ID! @external
   }
   type User @key(fields: "_id") {
@@ -106,6 +110,13 @@ const resolvers = {
         return allBulletins;
       }
       return allBulletins;
+    },
+    postings: async (_, __, { me }) => {
+      const allPostings = await Posting.find();
+      if (!me.id) {
+        return allPostings;
+      }
+      return allPostings;
     },
   },
   Mutation: {

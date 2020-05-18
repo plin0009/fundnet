@@ -5,15 +5,23 @@ import {
   CHANGE_BULLETIN,
   ADD_BULLETIN,
   REMOVE_BULLETIN,
+  CHANGE_POSTING,
+  ADD_POSTING,
+  REMOVE_POSTING,
 } from "../queries";
 import { EditableBulletin } from "../components/Bulletin";
+import { EditablePosting } from "../components/Posting";
 import Tiles from "../components/Tiles";
 
 const OrgMe = ({ history }) => {
   const { data } = useQuery(GET_ORG_ME);
   const [changeBulletin] = useMutation(CHANGE_BULLETIN);
   const [addBulletin] = useMutation(ADD_BULLETIN);
-  const [removeBulletin, { error }] = useMutation(REMOVE_BULLETIN);
+  const [removeBulletin] = useMutation(REMOVE_BULLETIN);
+
+  const [changePosting] = useMutation(CHANGE_POSTING);
+  const [addPosting] = useMutation(ADD_POSTING);
+  const [removePosting] = useMutation(REMOVE_POSTING);
 
   const [tab, setTab] = useState("BULLETINS");
 
@@ -40,6 +48,24 @@ const OrgMe = ({ history }) => {
   };
   const editBulletin = async ({ id, ...changes }) => {
     await changeBulletin({
+      variables: { id, changes: JSON.stringify(changes) },
+    });
+    history.go();
+  };
+
+  const addNewPosting = async ({ title, description, website, filters }) => {
+    await addPosting({
+      variables: {
+        title,
+        description,
+        website,
+        filters: JSON.stringify(filters),
+      },
+    });
+    history.go();
+  };
+  const editPosting = async ({ id, ...changes }) => {
+    await changePosting({
       variables: { id, changes: JSON.stringify(changes) },
     });
     history.go();
@@ -101,7 +127,22 @@ const OrgMe = ({ history }) => {
           ) : tab === "POSTINGS" ? (
             <div>
               <h2 className="title is-4">My postings</h2>
-              <Tiles>{[...postings.map((posting) => <></>), <></>]}</Tiles>
+              <Tiles>
+                {[
+                  ...postings.map((posting) => (
+                    <EditablePosting
+                      before={posting}
+                      onSaveEdit={editPosting}
+                      onRemove={() =>
+                        removePosting({
+                          variables: { id: posting._id },
+                        })
+                      }
+                    />
+                  )),
+                  <EditablePosting isNew onSaveEdit={addNewPosting} />,
+                ]}
+              </Tiles>
             </div>
           ) : (
             <div></div>

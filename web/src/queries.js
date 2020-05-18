@@ -134,6 +134,49 @@ export const GET_ORG_ME = gql`
         title
         description
         website
+        filters {
+          geofence {
+            coords
+            distance
+          }
+          availabilities {
+            sun {
+              morning
+              afternoon
+              evening
+            }
+            mon {
+              morning
+              afternoon
+              evening
+            }
+            tue {
+              morning
+              afternoon
+              evening
+            }
+            wed {
+              morning
+              afternoon
+              evening
+            }
+            thu {
+              morning
+              afternoon
+              evening
+            }
+            fri {
+              morning
+              afternoon
+              evening
+            }
+            sat {
+              morning
+              afternoon
+              evening
+            }
+          }
+        }
       }
     }
   }
@@ -195,11 +238,6 @@ export const CHANGE_ME = gql`
           evening
         }
         sat {
-          morning
-          afternoon
-          evening
-        }
-        sun {
           morning
           afternoon
           evening
@@ -285,6 +323,95 @@ export const GET_FORWARD_GEOCODE = gql`
     forwardGeocode(input: $input) {
       coords
       name
+    }
+  }
+`;
+
+export const CHANGE_POSTING = gql`
+  mutation ChangePosting($id: ID!, $changes: String!) {
+    changePosting(id: $id, changes: $changes) {
+      _id
+    }
+  }
+`;
+
+export const REMOVE_POSTING = gql`
+  mutation RemovePosting($id: ID!) {
+    removePosting(id: $id) {
+      _id
+    }
+  }
+`;
+export const ADD_POSTING = gql`
+  mutation AddPosting(
+    $title: String!
+    $description: String
+    $website: String
+    $filters: String!
+  ) {
+    addPosting(
+      title: $title
+      description: $description
+      website: $website
+      filters: $filters
+    ) {
+      title
+    }
+  }
+`;
+export const GET_POSTINGS = gql`
+  {
+    postings {
+      _id
+      title
+      description
+      website
+      creator {
+        name
+      }
+      filters {
+        geofence {
+          coords
+          distance
+        }
+        availabilities {
+          sun {
+            morning
+            afternoon
+            evening
+          }
+          mon {
+            morning
+            afternoon
+            evening
+          }
+          tue {
+            morning
+            afternoon
+            evening
+          }
+          wed {
+            morning
+            afternoon
+            evening
+          }
+          thu {
+            morning
+            afternoon
+            evening
+          }
+          fri {
+            morning
+            afternoon
+            evening
+          }
+          sat {
+            morning
+            afternoon
+            evening
+          }
+        }
+      }
     }
   }
 `;

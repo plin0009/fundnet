@@ -13,6 +13,7 @@ import OrgMe from "./pages/OrgMe";
 import Bulletins from "./pages/Bulletins";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Postings from "./pages/Postings";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/me" exact component={Me} />
         <Route path="/org/me" exact component={OrgMe} />
         <Route path="/bulletins" exact component={Bulletins} />
+        <Route path="/postings" exact component={Postings} />
         <Route path="/" component={NotFound} />
       </Switch>
       <Footer />
