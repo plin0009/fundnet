@@ -1,7 +1,7 @@
 import React from 'react';
-import {TextInput} from 'react-native-gesture-handler';
-import {StyleSheet, View, Text} from 'react-native';
-import {Colors, Fonts} from '../styles';
+import { TextInput } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text } from 'react-native';
+import { Colors, Fonts } from '../styles';
 
 type Props = {
   label: String;
@@ -10,7 +10,7 @@ type Props = {
   isPassword?: boolean;
 };
 
-const Textbox = ({label, value, setValue, isPassword}: Props) => {
+const Textbox = ({ label, value, setValue, isPassword }: Props) => {
   return (
     <View style={styles.wrapper}>
       <Text style={styles.label}>{label}</Text>

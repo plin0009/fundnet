@@ -1,16 +1,16 @@
 import React from 'react';
-import {View, StyleSheet, SafeAreaView, Text} from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from 'src/types';
-import {Colors, Fonts} from '../styles';
-import {Button} from '../components/Button';
+import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from 'src/types';
+import { Colors, Fonts } from '../styles';
+import { Button } from '../components/Button';
 
-declare const global: {HermesInternal: null | {}};
+declare const global: { HermesInternal: null | {} };
 
-type Props = {
+interface Props {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
-};
-const HomeScreen = ({navigation}: Props) => {
+}
+const HomeScreen = ({ navigation }: Props) => {
   return (
     <SafeAreaView style={styles.wrapper}>
       {global.HermesInternal == null ? null : (
