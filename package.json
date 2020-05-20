@@ -22,5 +22,6 @@
   "homepage": "https://github.com/plin0009/fundnet#readme",
   "devDependencies": {
     "concurrently": "^5.2.0"
-  }
+  },
+  "dependencies": {}
 }

@@ -1,53 +1,24 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  StatusBar,
-} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-declare const global: {HermesInternal: null | {}};
+import {StatusBar} from 'react-native';
+import HomeScreen from './src/screens/HomeScreen';
+import {RootStackParamList} from 'src/types';
+import SignupScreen from './src/screens/SignupScreen';
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
-    <>
+    <NavigationContainer>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.wrapper}>
-        {global.HermesInternal == null ? null : (
-          <View style={styles.engine}>
-            <Text style={styles.footer}>Engine: Hermes</Text>
-          </View>
-        )}
-        <View style={styles.body}>
-          <Text style={styles.text}>FundNet</Text>
-          <Button title="Click me" onPress={() => {}} />
-        </View>
-      </SafeAreaView>
-    </>
+      <Stack.Navigator headerMode="none">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
-  body: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  footer: {
-    color: '#0009',
-  },
-  text: {
-    fontSize: 30,
-  },
-});
-
 export default App;
