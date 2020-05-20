@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from 'src/types';
+import { MeStackParamList } from 'src/types';
 import { Colors, Fonts } from '../styles';
-import { Button } from '../components/Button';
+import { Button, ClickableText } from '../components/Button';
 
 declare const global: { HermesInternal: null | {} };
 
 interface Props {
-  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
+  navigation: StackNavigationProp<MeStackParamList, 'Home'>;
 }
 const HomeScreen = ({ navigation }: Props) => {
   return (
@@ -21,9 +21,15 @@ const HomeScreen = ({ navigation }: Props) => {
       <View style={styles.body}>
         <Text style={styles.text}>FundNet</Text>
         <Button
-          title="Click me"
+          title="Join FundNet"
           onPress={() => {
             navigation.navigate('Signup');
+          }}
+        />
+        <ClickableText
+          title="Already have an account? Log in"
+          onPress={() => {
+            navigation.navigate('Login');
           }}
         />
       </View>

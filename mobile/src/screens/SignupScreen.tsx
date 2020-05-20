@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from 'src/types';
+import { MeStackParamList } from 'src/types';
 import Textbox from '../components/Textbox';
 import { Fonts, Colors } from '../styles';
 import { Button, ClickableText } from '../components/Button';
@@ -10,7 +10,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { SIGNUP, AuthData, AuthVars } from '../queries';
 
 interface Props {
-  navigation: StackNavigationProp<RootStackParamList, 'Signup'>;
+  navigation: StackNavigationProp<MeStackParamList, 'Signup'>;
 }
 
 const SignupScreen = ({ navigation }: Props) => {
@@ -46,7 +46,7 @@ const SignupScreen = ({ navigation }: Props) => {
         <ClickableText
           title="Have an account? Log in"
           onPress={() => {
-            navigation.navigate('Home');
+            navigation.navigate('Login');
           }}
         />
       </ScrollView>

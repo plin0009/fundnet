@@ -3,19 +3,13 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import {
-  Text,
-  StyleSheet,
-  Platform,
-  View,
-  GestureResponderEvent,
-} from 'react-native';
+import { Text, StyleSheet, Platform, View } from 'react-native';
 import { Colors, Fonts } from '../styles';
 
-type Props = {
+interface Props {
   title: string;
-  onPress: (event: GestureResponderEvent) => void;
-};
+  onPress: () => void;
+}
 
 const ButtonComponent = Platform.select({
   ios: TouchableOpacity,
@@ -35,7 +29,7 @@ export const Button = ({ title, onPress }: Props) => {
 
 export const ClickableText = ({ title, onPress }: Props) => {
   return (
-    <View style={{}}>
+    <View>
       <TouchableOpacity onPress={onPress} style={styles.clickableText}>
         <Text style={styles.subtitle}>{title}</Text>
       </TouchableOpacity>

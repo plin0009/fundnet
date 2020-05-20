@@ -7,12 +7,12 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { RootStackParamList } from 'src/types';
+//import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { RootStackParamList } from './src/types';
 
 import { StatusBar } from 'react-native';
-import HomeScreen from './src/screens/HomeScreen';
-import SignupScreen from './src/screens/SignupScreen';
+import { MeStackScreen, BulletinsStackScreen } from './src/stacks';
 
 const serverPort = 8000;
 
@@ -26,16 +26,16 @@ const client = new ApolloClient({
   cache,
 });
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createBottomTabNavigator<RootStackParamList>();
 
 const App = () => {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
         <StatusBar barStyle="dark-content" />
-        <Stack.Navigator headerMode="none">
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Navigator>
+          <Stack.Screen name="Bulletins" component={BulletinsStackScreen} />
+          <Stack.Screen name="Me" component={MeStackScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
