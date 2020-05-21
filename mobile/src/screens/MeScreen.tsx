@@ -1,26 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { Colors, Fonts } from '../styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { MeStackParamList } from '../types';
+import { MeStackParamList, RootStackParamList } from '../types';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { GET_ME, MeData, LOGOUT } from '../queries';
 import { Button, ClickableText } from '../components/Button';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 interface Props {
-  navigation: StackNavigationProp<MeStackParamList, 'Me'>;
+  //navigation: StackNavigationProp<MeStackParamList, 'Me'>;
+  navigation: CompositeNavigationProp<
+    StackNavigationProp<MeStackParamList, 'Me'>,
+    BottomTabNavigationProp<RootStackParamList, 'Me'>
+  >;
+  //route: RouteProp<MeStackParamList, 'Me'>;
 }
 const MeScreen = ({ navigation }: Props) => {
-  const { data } = useQuery<{ me: MeData }>(GET_ME);
+  const { data, refetch } = useQuery<{ me: MeData }>(GET_ME);
   const [logout, { client }] = useMutation<{ logout: boolean }>(LOGOUT, {
     update: async () => {
       if (client) {
         await client.resetStore();
-        navigation.navigate('Login');
       }
     },
   });
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      refetch();
+    });
+  }, [navigation, refetch]);
 
   return (
     <SafeAreaView style={styles.body}>
