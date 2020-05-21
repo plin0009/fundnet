@@ -8,8 +8,8 @@ import { MeStackParamList, BulletinsStackParamList } from './types';
 import SignupScreen from './screens/SignupScreen';
 import BulletinsScreen from './screens/BulletinsScreen';
 import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
 import { Colors, Fonts } from './styles';
+import MeScreen from './screens/MeScreen';
 
 const MeStack = createStackNavigator<MeStackParamList>();
 const BulletinsStack = createStackNavigator<BulletinsStackParamList>();
@@ -29,7 +29,7 @@ const screenOptions: StackNavigationOptions = {
 export const MeStackScreen = () => {
   return (
     <MeStack.Navigator screenOptions={screenOptions}>
-      <MeStack.Screen name="Home" component={HomeScreen} />
+      <MeStack.Screen name="Me" component={MeScreen} />
       <MeStack.Screen
         name="Signup"
         component={SignupScreen}

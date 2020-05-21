@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Svg, Circle, Rect } from 'react-native-svg';
 
 interface Props {
@@ -17,7 +17,7 @@ export const getTabBarIcon = ({ name, color, size }: Props) => {
   return Icons[name]({ color, size });
 };
 
-const Icons: Record<string, (props: IconProps) => ReactNode> = {
+const Icons: Record<string, (props: IconProps) => Element> = {
   Bulletins: ({ color, size }) => (
     <Svg height={size} width={size} viewBox="0 0 100 100">
       <Circle cx="50" cy="50" r="50" fill={color} />

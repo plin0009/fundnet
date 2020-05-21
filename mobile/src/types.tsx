@@ -4,7 +4,7 @@ export type RootStackParamList = {
 };
 
 export type MeStackParamList = {
-  Home: undefined;
+  Me: undefined;
   Signup: undefined;
   Login: undefined;
 };
