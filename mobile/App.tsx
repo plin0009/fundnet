@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import { StatusBar } from 'react-native';
 
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -7,22 +8,20 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { NavigationContainer } from '@react-navigation/native';
-//import { createStackNavigator } from '@react-navigation/stack';
 import {
   createBottomTabNavigator,
   BottomTabBarOptions,
 } from '@react-navigation/bottom-tabs';
 import { RootStackParamList } from './src/types';
 
-import { StatusBar } from 'react-native';
 import { MeStackScreen, BulletinsStackScreen } from './src/stacks';
 import { Fonts, Colors } from './src/styles';
 import { getTabBarIcon } from './src/icons';
 
-const serverPort = 8000;
+import { serverDomain, serverPort } from './src/config';
 
 const httpLink = createHttpLink({
-  uri: `http://localhost:${serverPort}`,
+  uri: `http://${serverDomain}:${serverPort}`,
   credentials: 'include',
 });
 const cache = new InMemoryCache();
@@ -38,7 +37,7 @@ const tabBarOptions: BottomTabBarOptions = {
     fontFamily: Fonts.family,
   },
   activeTintColor: Colors.primary,
-  inactiveTintColor: Colors.secondary,
+  inactiveTintColor: Colors.primary + 'aa',
   style: {
     backgroundColor: Colors.background,
   },
