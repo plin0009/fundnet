@@ -42,7 +42,6 @@ const SignupScreen = ({ navigation }: Props) => {
         <Button
           title="Join"
           onPress={async () => {
-            // navigation.navigate('Home');
             await signup();
             console.log('signed up');
           }}

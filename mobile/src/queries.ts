@@ -14,6 +14,13 @@ export const SIGNUP = gql`
     }
   }
 `;
+export const LOGIN = gql`
+  mutation login($handle: String!, $pass: String!) {
+    login(handle: $handle, pass: $pass) {
+      token
+    }
+  }
+`;
 
 enum Attribute {
   unspecified = 'UNSPECIFIED',

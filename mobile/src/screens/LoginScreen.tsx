@@ -6,6 +6,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Colors, Fonts } from '../styles';
 import { Button, ClickableText } from '../components/Button';
 import Textbox from '../components/Textbox';
+import { useMutation } from '@apollo/react-hooks';
+import { LOGIN, AuthData, AuthVars } from '../queries';
 
 interface Props {
   navigation: StackNavigationProp<MeStackParamList, 'Login'>;
@@ -14,6 +16,12 @@ const LoginScreen = ({ navigation }: Props) => {
   const [handleInput, setHandleInput] = useState('');
   const [passInput, setPassInput] = useState('');
 
+  const [login] = useMutation<{ login: AuthData }, AuthVars>(LOGIN, {
+    variables: {
+      handle: handleInput,
+      pass: passInput,
+    },
+  });
   return (
     <SafeAreaView style={styles.body}>
       <ScrollView style={styles.form}>
@@ -29,7 +37,13 @@ const LoginScreen = ({ navigation }: Props) => {
           value={passInput}
           setValue={setPassInput}
         />
-        <Button title="Sign in" onPress={() => {}} />
+        <Button
+          title="Sign in"
+          onPress={async () => {
+            await login();
+            console.log('logged in');
+          }}
+        />
         <ClickableText
           title="No account yet? Join FundNet"
           onPress={() => navigation.navigate('Signup')}
