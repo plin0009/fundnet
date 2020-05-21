@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MeStackParamList } from 'src/types';
 import { Colors, Fonts } from '../styles';
 import { Button, ClickableText } from '../components/Button';
+import { ScrollView } from 'react-native-gesture-handler';
 
 declare const global: { HermesInternal: null | {} };
 
@@ -12,16 +13,12 @@ interface Props {
 }
 const HomeScreen = ({ navigation }: Props) => {
   return (
-    <SafeAreaView style={styles.wrapper}>
-      {global.HermesInternal == null ? null : (
-        <View style={styles.engine}>
-          <Text style={styles.footer}>Engine: Hermes</Text>
-        </View>
-      )}
-      <View style={styles.body}>
-        <Text style={styles.text}>FundNet</Text>
+    <SafeAreaView style={styles.body}>
+      <View style={styles.form}>
+        <Text style={styles.title}>FundNet</Text>
+        <Text style={styles.subtitle}>You aren't signed into FundNet.</Text>
         <Button
-          title="Join FundNet"
+          title="Join"
           onPress={() => {
             navigation.navigate('Signup');
           }}
@@ -38,15 +35,11 @@ const HomeScreen = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  body: {
     flex: 1,
     backgroundColor: Colors.background,
   },
-  body: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  form: { flex: 1, padding: 40, justifyContent: 'center' },
   engine: {
     position: 'absolute',
     right: 0,
@@ -55,9 +48,17 @@ const styles = StyleSheet.create({
     color: '#0009',
     fontFamily: Fonts.family,
   },
-  text: {
+  title: {
+    color: Colors.primary,
     fontFamily: Fonts.family,
-    fontSize: 30,
+    fontSize: Fonts.size.large,
+    textAlign: 'center',
+  },
+  subtitle: {
+    color: Colors.secondary,
+    fontFamily: Fonts.family,
+    fontSize: Fonts.size.medium,
+    textAlign: 'center',
   },
 });
 

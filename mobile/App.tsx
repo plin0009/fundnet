@@ -8,11 +8,16 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import { NavigationContainer } from '@react-navigation/native';
 //import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  createBottomTabNavigator,
+  BottomTabBarOptions,
+} from '@react-navigation/bottom-tabs';
 import { RootStackParamList } from './src/types';
 
 import { StatusBar } from 'react-native';
 import { MeStackScreen, BulletinsStackScreen } from './src/stacks';
+import { Fonts, Colors } from './src/styles';
+import { getTabBarIcon } from './src/icons';
 
 const serverPort = 8000;
 
@@ -28,14 +33,39 @@ const client = new ApolloClient({
 
 const Stack = createBottomTabNavigator<RootStackParamList>();
 
+const tabBarOptions: BottomTabBarOptions = {
+  labelStyle: {
+    fontFamily: Fonts.family,
+  },
+  activeTintColor: Colors.primary,
+  inactiveTintColor: Colors.secondary,
+  style: {
+    backgroundColor: Colors.background,
+  },
+  showLabel: false,
+};
+
 const App = () => {
   return (
     <ApolloProvider client={client}>
+      <StatusBar barStyle="dark-content" />
       <NavigationContainer>
-        <StatusBar barStyle="dark-content" />
-        <Stack.Navigator>
-          <Stack.Screen name="Bulletins" component={BulletinsStackScreen} />
-          <Stack.Screen name="Me" component={MeStackScreen} />
+        <Stack.Navigator tabBarOptions={tabBarOptions}>
+          <Stack.Screen
+            name="Bulletins"
+            component={BulletinsStackScreen}
+            options={{
+              tabBarIcon: (props) =>
+                getTabBarIcon({ name: 'Bulletins', ...props }),
+            }}
+          />
+          <Stack.Screen
+            name="Me"
+            component={MeStackScreen}
+            options={{
+              tabBarIcon: (props) => getTabBarIcon({ name: 'Me', ...props }),
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>

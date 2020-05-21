@@ -28,6 +28,10 @@ const SignupScreen = ({ navigation }: Props) => {
     <SafeAreaView style={styles.body}>
       <ScrollView style={styles.form}>
         <Text style={styles.title}>Join FundNet</Text>
+        <Text style={styles.subtitle}>
+          Creating an account allows you to save and personalize your
+          money-making opportunities.
+        </Text>
         <Textbox label="Handle" value={handleInput} setValue={setHandleInput} />
         <Textbox
           label="Password"
@@ -65,10 +69,16 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primary,
-    fontFamily: Fonts.bold,
-    fontSize: Fonts.size.large,
+    fontFamily: Fonts.family,
+    fontSize: Fonts.size.larger,
     textAlign: 'center',
     margin: 20,
+  },
+  subtitle: {
+    color: Colors.secondary,
+    fontFamily: Fonts.family,
+    fontSize: Fonts.size.medium,
+    textAlign: 'center',
   },
 });
 export default SignupScreen;
