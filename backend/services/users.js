@@ -45,8 +45,8 @@ const typeDefs = gql`
     physicalCondition: Attribute
     mentalCondition: Attribute
 
-    employmentHours: EmploymentHours!
-    employmentStatus: EmploymentStatus!
+    employmentHours: EmploymentHours
+    employmentStatus: EmploymentStatus
     income: Int
 
     location: Location
@@ -55,8 +55,8 @@ const typeDefs = gql`
     bulletins: [Bulletin!]!
   }
   type Location {
-    coords: [Float!]!
-    name: String!
+    coords: [Float!]
+    name: String
   }
   type Availability {
     sun: TimeOfDay

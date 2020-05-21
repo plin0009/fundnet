@@ -11,8 +11,8 @@ const typeDefs = gql`
     _id: ID! @external
   }
   type Location {
-    coords: [Float!]!
-    name: String!
+    coords: [Float!]
+    name: String
   }
   type Posting @key(fields: "_id") {
     _id: ID!
