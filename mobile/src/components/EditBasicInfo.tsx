@@ -6,24 +6,24 @@ import { Fonts, Colors } from '../styles';
 import { AttributeButton, Button } from './Button';
 
 interface Props {
-  minAge: number;
-  maxAge: number;
-  homeOwner: Attribute;
-  autoOwner: Attribute;
-  student: Attribute;
-  veteran: Attribute;
-  pregnant: Attribute;
-  parent: Attribute;
-  physicalCondition: Attribute;
-  mentalCondition: Attribute;
+  minAge?: number | null;
+  maxAge?: number | null;
+  homeOwner?: Attribute;
+  autoOwner?: Attribute;
+  student?: Attribute;
+  veteran?: Attribute;
+  pregnant?: Attribute;
+  parent?: Attribute;
+  physicalCondition?: Attribute;
+  mentalCondition?: Attribute;
 }
 
 const EditBasicInfo = (props: Props) => {
-  const [edits, setEdits] = useState<any>({});
+  const [edits, setEdits] = useState<Props>({});
 
   return (
     <View style={styles.box}>
-      <View style={styles.headerBox}>
+      <View style={styles.titleBox}>
         <Text style={styles.title}>Basic info</Text>
         <Button
           title="Save changes"
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
     fontSize: Fonts.size.medium,
   },
-  headerBox: {
+  titleBox: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     fontFamily: Fonts.family,
     fontSize: Fonts.size.larger,
+    flexShrink: 1,
   },
 });
 

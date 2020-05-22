@@ -30,18 +30,18 @@ export enum Attribute {
   no = 'NO',
 }
 export enum EmploymentHours {
-  unspecified = 'UNSPECIFIED',
-  fullTime = 'FULL_TIME',
-  partTime = 'PART_TIME',
-  other = 'OTHER',
+  'Unspecified' = 'UNSPECIFIED',
+  'Full-time' = 'FULL_TIME',
+  'Part-time' = 'PART_TIME',
+  'Other' = 'OTHER',
 }
 export enum EmploymentStatus {
-  unspecified = 'UNSPECIFIED',
-  employee = 'EMPLOYEE',
-  worker = 'WORKER',
-  selfEmployed = 'SELF_EMPLOYED',
-  unemployed = 'UNEMPLOYED',
-  other = 'OTHER',
+  'Unspecified' = 'UNSPECIFIED',
+  'Employee' = 'EMPLOYEE',
+  'Worker' = 'WORKER',
+  'Self-Employed' = 'SELF_EMPLOYED',
+  'Unemployed' = 'UNEMPLOYED',
+  'Other' = 'OTHER',
 }
 
 export interface TimesOfDay {

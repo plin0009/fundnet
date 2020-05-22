@@ -10,6 +10,7 @@ import { Button, ClickableText } from '../components/Button';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import EditBasicInfo from '../components/EditBasicInfo';
+import EditEmploymentAndIncome from '../components/EditEmploymentAndIncome';
 
 interface Props {
   //navigation: StackNavigationProp<MeStackParamList, 'Me'>;
@@ -51,6 +52,7 @@ const MeScreen = ({ navigation }: Props) => {
           </View>
           <ScrollView>
             <EditBasicInfo {...data.me} />
+            <EditEmploymentAndIncome {...data.me} />
             <Text>{JSON.stringify(data.me)}</Text>
           </ScrollView>
         </View>
