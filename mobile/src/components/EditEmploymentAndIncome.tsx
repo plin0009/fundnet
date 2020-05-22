@@ -8,13 +8,13 @@ import { Picker } from '@react-native-community/picker';
 import Textbox from './Textbox';
 
 interface Props {
-  employmentHours: EmploymentHours;
-  employmentStatus: EmploymentStatus;
-  income: number;
+  employmentHours?: EmploymentHours;
+  employmentStatus?: EmploymentStatus;
+  income?: number | null;
 }
 
 const EditEmploymentAndIncome = (props: Props) => {
-  const [edits, setEdits] = useState<any>({});
+  const [edits, setEdits] = useState<Props>({});
 
   return (
     <View style={styles.box}>
@@ -31,7 +31,7 @@ const EditEmploymentAndIncome = (props: Props) => {
         selectedValue={
           edits.employmentHours || props.employmentHours || 'UNSPECIFIED'
         }
-        onValueChange={(itemValue) => {
+        onValueChange={(itemValue: EmploymentHours) => {
           setEdits((e) => ({ ...e, employmentHours: itemValue }));
         }}>
         {Object.keys(EmploymentHours).map((key) => (
@@ -43,7 +43,7 @@ const EditEmploymentAndIncome = (props: Props) => {
         selectedValue={
           edits.employmentStatus || props.employmentStatus || 'UNSPECIFIED'
         }
-        onValueChange={(itemValue) => {
+        onValueChange={(itemValue: EmploymentStatus) => {
           setEdits((e) => ({ ...e, employmentStatus: itemValue }));
         }}>
         {Object.keys(EmploymentStatus).map((key) => (
