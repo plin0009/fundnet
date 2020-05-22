@@ -1,4 +1,11 @@
 import gql from 'graphql-tag';
+import {
+  Attribute,
+  EmploymentHours,
+  EmploymentStatus,
+  Location,
+  Availability,
+} from './types';
 
 export interface AuthVars {
   handle: string;
@@ -27,45 +34,6 @@ export const LOGOUT = gql`
   }
 `;
 
-enum Attribute {
-  unspecified = 'UNSPECIFIED',
-  yes = 'YES',
-  no = 'NO',
-}
-enum EmploymentHours {
-  unspecified = 'UNSPECIFIED',
-  fullTime = 'FULL_TIME',
-  partTime = 'PART_TIME',
-  other = 'OTHER',
-}
-enum EmploymentStatus {
-  unspecified = 'UNSPECIFIED',
-  employee = 'EMPLOYEE',
-  worker = 'WORKER',
-  selfEmployed = 'SELF_EMPLOYED',
-  unemployed = 'UNEMPLOYED',
-  other = 'OTHER',
-}
-
-interface TimesOfDay {
-  morning: Attribute;
-  afternoon: Attribute;
-  evening: Attribute;
-}
-
-interface Location {
-  coords: [number];
-  name: string;
-}
-interface Availability {
-  sun: TimesOfDay;
-  mon: TimesOfDay;
-  tue: TimesOfDay;
-  wed: TimesOfDay;
-  thu: TimesOfDay;
-  fri: TimesOfDay;
-  sat: TimesOfDay;
-}
 export interface MeData {
   handle: string;
   minAge: number;

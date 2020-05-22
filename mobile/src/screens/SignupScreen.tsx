@@ -44,6 +44,7 @@ const SignupScreen = ({ navigation }: Props) => {
           onPress={async () => {
             await signup();
             console.log('signed up');
+            navigation.navigate('Me');
           }}
         />
         <ClickableText

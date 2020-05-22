@@ -4,21 +4,31 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Colors, Fonts } from '../styles';
 
 type Props = {
-  label: String;
+  label: string;
   value: string;
-  setValue: Function;
+  setValue: (text: string) => void;
   isPassword?: boolean;
+  isNumeric?: boolean;
+  isSmall?: boolean;
 };
 
-const Textbox = ({ label, value, setValue, isPassword }: Props) => {
+const Textbox = ({
+  label,
+  value,
+  setValue,
+  isPassword,
+  isNumeric,
+  isSmall,
+}: Props) => {
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, isSmall && styles.labelSmall]}>{label}</Text>
       <TextInput
-        style={styles.textbox}
+        style={[styles.textbox, isSmall && styles.textboxSmall]}
         value={value}
         onChangeText={(text) => setValue(text)}
         secureTextEntry={isPassword}
+        keyboardType={isNumeric ? 'numeric' : 'default'}
       />
     </View>
   );
@@ -27,6 +37,7 @@ const Textbox = ({ label, value, setValue, isPassword }: Props) => {
 const styles = StyleSheet.create({
   wrapper: {
     marginVertical: 10,
+    flexGrow: 1,
   },
   textbox: {
     backgroundColor: Colors.white,
@@ -42,6 +53,12 @@ const styles = StyleSheet.create({
     fontSize: Fonts.size.medium,
     marginBottom: 10,
     color: Colors.primary,
+  },
+  labelSmall: { fontSize: Fonts.size.small, marginBottom: 5 },
+  textboxSmall: {
+    fontSize: Fonts.size.small,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
   },
 });
 

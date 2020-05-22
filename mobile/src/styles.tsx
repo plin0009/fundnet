@@ -5,6 +5,8 @@ export const Colors = {
   white: '#ffffffaa',
   light: '#e6fffa',
   background: '#e3fcf7',
+  danger: '#ff0000',
+  success: '#00ff00',
 };
 
 export const Fonts = {

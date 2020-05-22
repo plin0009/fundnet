@@ -42,6 +42,7 @@ const LoginScreen = ({ navigation }: Props) => {
           onPress={async () => {
             await login();
             console.log('logged in');
+            navigation.navigate('Me');
           }}
         />
         <ClickableText

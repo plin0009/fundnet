@@ -9,6 +9,7 @@ import { GET_ME, MeData, LOGOUT } from '../queries';
 import { Button, ClickableText } from '../components/Button';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import EditBasicInfo from '../components/EditBasicInfo';
 
 interface Props {
   //navigation: StackNavigationProp<MeStackParamList, 'Me'>;
@@ -28,9 +29,10 @@ const MeScreen = ({ navigation }: Props) => {
     },
   });
   useEffect(() => {
-    navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener('focus', () => {
       refetch();
     });
+    return unsubscribe;
   }, [navigation, refetch]);
 
   return (
@@ -39,7 +41,7 @@ const MeScreen = ({ navigation }: Props) => {
         <View style={styles.profile}>
           <View style={styles.profileHeader}>
             <Text style={styles.subtitle}>@{data.me.handle}</Text>
-            <Button
+            <ClickableText
               title="Sign out"
               onPress={async () => {
                 const l = await logout();
@@ -48,6 +50,7 @@ const MeScreen = ({ navigation }: Props) => {
             />
           </View>
           <ScrollView>
+            <EditBasicInfo {...data.me} />
             <Text>{JSON.stringify(data.me)}</Text>
           </ScrollView>
         </View>
