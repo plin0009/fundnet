@@ -15,9 +15,12 @@ import Textbox from './Textbox';
 import { ScrollView } from 'react-native-gesture-handler';
 import { radarSecret } from '../config';
 
-interface Props {
+interface JobFindingData {
   location?: Location;
   availability?: Availability;
+}
+interface Props extends JobFindingData {
+  saveEdits: (edits: string) => void;
 }
 
 const locationToDisplay = (location: Location | null) => {
@@ -35,18 +38,16 @@ const forwardGeocode = async (query: string) => {
       },
     },
   );
-  console.log(response);
-  const result = await response.json();
-  console.log(result);
-  const { addresses } = result;
+  const { addresses } = await response.json();
   const { latitude, longitude, formattedAddress /*confidence*/ } = addresses[0];
 
   const coords: [number, number] = [latitude, longitude];
   const name = formattedAddress;
   return { coords, name };
 };
+
 const EditJobFinding = (props: Props) => {
-  const [edits, setEdits] = useState<Props>({});
+  const [edits, setEdits] = useState<JobFindingData>({});
   const [searchLocationInput, setSearchLocationInput] = useState<string>('');
   const [searchedLocation, setSearchedLocation] = useState<Location | null>(
     null,
@@ -58,7 +59,9 @@ const EditJobFinding = (props: Props) => {
         <Button
           title="Save changes"
           isSmall
-          onPress={() => console.log(JSON.stringify(edits))}
+          onPress={() => {
+            props.saveEdits(JSON.stringify(edits));
+          }}
         />
       </View>
       <Text style={styles.header}>Location</Text>

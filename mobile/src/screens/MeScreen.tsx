@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { MeStackParamList, RootStackParamList } from '../types';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_ME, MeData, LOGOUT } from '../queries';
+import { GET_ME, MeData, LOGOUT, CHANGE_ME } from '../queries';
 import { Button, ClickableText } from '../components/Button';
 import { CompositeNavigationProp } from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -30,12 +30,20 @@ const MeScreen = ({ navigation }: Props) => {
       }
     },
   });
+  const [changeMe] = useMutation<{ changeMe: MeData }>(CHANGE_ME);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       refetch();
     });
     return unsubscribe;
   }, [navigation, refetch]);
+
+  const saveEdits = async (changes: string) => {
+    await changeMe({
+      variables: { changes },
+    });
+    console.log('updated');
+  };
 
   return (
     <SafeAreaView style={styles.body}>
@@ -52,9 +60,9 @@ const MeScreen = ({ navigation }: Props) => {
             />
           </View>
           <ScrollView>
-            <EditBasicInfo {...data.me} />
-            <EditEmploymentAndIncome {...data.me} />
-            <EditJobFinding {...data.me} />
+            <EditBasicInfo {...data.me} saveEdits={saveEdits} />
+            <EditEmploymentAndIncome {...data.me} saveEdits={saveEdits} />
+            <EditJobFinding {...data.me} saveEdits={saveEdits} />
           </ScrollView>
         </View>
       ) : (

@@ -123,3 +123,73 @@ export const GET_ME = gql`
     }
   }
 `;
+
+export const CHANGE_ME = gql`
+  mutation changeMe($changes: String!) {
+    changeMe(changes: $changes) {
+      handle
+
+      minAge
+      maxAge
+      homeOwner
+      autoOwner
+      student
+      veteran
+      pregnant
+      parent
+      physicalCondition
+      mentalCondition
+
+      employmentHours
+      employmentStatus
+      income
+
+      location {
+        coords
+        name
+      }
+      availability {
+        sun {
+          morning
+          afternoon
+          evening
+        }
+        mon {
+          morning
+          afternoon
+          evening
+        }
+        tue {
+          morning
+          afternoon
+          evening
+        }
+        wed {
+          morning
+          afternoon
+          evening
+        }
+        thu {
+          morning
+          afternoon
+          evening
+        }
+        fri {
+          morning
+          afternoon
+          evening
+        }
+        sat {
+          morning
+          afternoon
+          evening
+        }
+        sun {
+          morning
+          afternoon
+          evening
+        }
+      }
+    }
+  }
+`;

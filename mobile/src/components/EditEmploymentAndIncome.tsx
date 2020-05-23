@@ -12,14 +12,17 @@ import { Button } from './Button';
 import { Picker } from '@react-native-community/picker';
 import Textbox from './Textbox';
 
-interface Props {
+interface EmploymentAndIncomeData {
   employmentHours?: EmploymentHours;
   employmentStatus?: EmploymentStatus;
   income?: number | null;
 }
+interface Props extends EmploymentAndIncomeData {
+  saveEdits: (edits: string) => void;
+}
 
 const EditEmploymentAndIncome = (props: Props) => {
-  const [edits, setEdits] = useState<Props>({});
+  const [edits, setEdits] = useState<EmploymentAndIncomeData>({});
 
   return (
     <View style={styles.box}>
@@ -28,7 +31,9 @@ const EditEmploymentAndIncome = (props: Props) => {
         <Button
           title="Save changes"
           isSmall
-          onPress={() => console.log(JSON.stringify(edits))}
+          onPress={() => {
+            props.saveEdits(JSON.stringify(edits));
+          }}
         />
       </View>
       <Text style={styles.header}>Employment hours</Text>

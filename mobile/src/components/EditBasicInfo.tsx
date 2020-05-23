@@ -5,7 +5,7 @@ import Textbox from './Textbox';
 import { Fonts, Colors } from '../styles';
 import { AttributeButton, Button } from './Button';
 
-interface Props {
+interface BasicInfoData {
   minAge?: number | null;
   maxAge?: number | null;
   homeOwner?: Attribute;
@@ -17,9 +17,12 @@ interface Props {
   physicalCondition?: Attribute;
   mentalCondition?: Attribute;
 }
+interface Props extends BasicInfoData {
+  saveEdits: (edits: string) => void;
+}
 
 const EditBasicInfo = (props: Props) => {
-  const [edits, setEdits] = useState<Props>({});
+  const [edits, setEdits] = useState<BasicInfoData>({});
 
   return (
     <View style={styles.box}>
@@ -28,7 +31,9 @@ const EditBasicInfo = (props: Props) => {
         <Button
           title="Save changes"
           isSmall
-          onPress={() => console.log(JSON.stringify(edits))}
+          onPress={() => {
+            props.saveEdits(JSON.stringify(edits));
+          }}
         />
       </View>
 
