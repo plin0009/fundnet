@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Attribute, AttributeList } from '../types';
+import { Attribute, attributes, Attributes } from '../types';
 import Textbox from './Textbox';
 import { Fonts, Colors } from '../styles';
 import { AttributeButton, Button } from './Button';
@@ -67,9 +67,10 @@ const EditBasicInfo = (props: Props) => {
       </View>
       <Text style={styles.header}>Attributes</Text>
       <View style={styles.attributeBox}>
-        {Object.keys(AttributeList).map((key) => (
+        {(Object.keys(attributes) as Array<Attributes>).map((key) => (
           <AttributeButton
-            title={AttributeList[key]}
+            key={key}
+            title={attributes[key]}
             onPress={() => {
               setEdits((e) => {
                 const oldValue = e[key] || props[key];
@@ -82,7 +83,7 @@ const EditBasicInfo = (props: Props) => {
                 return { ...e, [key]: newValue };
               });
             }}
-            value={edits[key] || props[key]}
+            value={edits[key] || props[key] || Attribute.unspecified}
           />
         ))}
       </View>

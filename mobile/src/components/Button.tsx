@@ -3,7 +3,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import { Text, StyleSheet, Platform, View } from 'react-native';
+import { Text, StyleSheet, Platform, View, ViewStyle } from 'react-native';
 import { Colors, Fonts } from '../styles';
 import { Attribute } from '../types';
 
@@ -52,18 +52,25 @@ export const AttributeButton = ({
   onPress,
   value,
 }: AttributeButtonProps) => {
-  let color = Colors.background;
+  let color: ViewStyle = {
+    borderColor: Colors.link,
+    borderWidth: 2,
+  };
   if (value === 'YES') {
-    color = Colors.success;
+    //color = { backgroundColor: Colors.success };
+    color.backgroundColor = Colors.success;
+    color.borderColor = Colors.success;
   }
   if (value === 'NO') {
-    color = Colors.danger;
+    //color = { backgroundColor: Colors.danger };
+    color.backgroundColor = Colors.danger;
+    color.borderColor = Colors.danger;
   }
   return (
     <View style={styles.attributeWrapper}>
       <ButtonComponent
         onPress={onPress}
-        style={[styles.attributeButton, { backgroundColor: color }]}>
+        style={[styles.attributeButton, color]}>
         <Text style={styles.attributeTitle}>{title}</Text>
       </ButtonComponent>
     </View>
@@ -92,11 +99,12 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
-  attributeButton: { padding: 10, paddingHorizontal: 20 },
+  attributeButton: { padding: 10, paddingHorizontal: 20, borderRadius: 100 },
   title: {
     fontFamily: Fonts.family,
     fontSize: Fonts.size.larger,
     color: Colors.light,
+    textAlign: 'center',
   },
   subtitle: {
     fontFamily: Fonts.family,
@@ -107,6 +115,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.family,
     fontSize: Fonts.size.smaller,
     color: Colors.primary,
+    textAlign: 'center',
   },
   buttonSmall: { paddingVertical: 10 },
   titleSmall: { fontSize: Fonts.size.smaller },

@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
-import { EmploymentHours, EmploymentStatus } from '../types';
+import {
+  EmploymentHours,
+  EmploymentStatus,
+  employmentHours,
+  employmentStatus,
+} from '../types';
 import { View, StyleSheet, Text } from 'react-native';
 import { Colors, Fonts } from '../styles';
 import { Button } from './Button';
@@ -31,11 +36,14 @@ const EditEmploymentAndIncome = (props: Props) => {
         selectedValue={
           edits.employmentHours || props.employmentHours || 'UNSPECIFIED'
         }
-        onValueChange={(itemValue: EmploymentHours) => {
-          setEdits((e) => ({ ...e, employmentHours: itemValue }));
+        onValueChange={(itemValue) => {
+          setEdits((e) => ({
+            ...e,
+            employmentHours: itemValue as EmploymentHours,
+          }));
         }}>
-        {Object.keys(EmploymentHours).map((key) => (
-          <Picker.Item label={key} value={EmploymentHours[key]} />
+        {(Object.keys(employmentHours) as Array<EmploymentHours>).map((key) => (
+          <Picker.Item key={key} label={employmentHours[key]} value={key} />
         ))}
       </Picker>
       <Text style={styles.header}>Employment status</Text>
@@ -43,12 +51,17 @@ const EditEmploymentAndIncome = (props: Props) => {
         selectedValue={
           edits.employmentStatus || props.employmentStatus || 'UNSPECIFIED'
         }
-        onValueChange={(itemValue: EmploymentStatus) => {
-          setEdits((e) => ({ ...e, employmentStatus: itemValue }));
+        onValueChange={(itemValue) => {
+          setEdits((e) => ({
+            ...e,
+            employmentStatus: itemValue as EmploymentStatus,
+          }));
         }}>
-        {Object.keys(EmploymentStatus).map((key) => (
-          <Picker.Item label={key} value={EmploymentStatus[key]} />
-        ))}
+        {(Object.keys(employmentStatus) as Array<EmploymentStatus>).map(
+          (key) => (
+            <Picker.Item key={key} label={employmentStatus[key]} value={key} />
+          ),
+        )}
       </Picker>
       <Text style={styles.header}>Income</Text>
       <Textbox

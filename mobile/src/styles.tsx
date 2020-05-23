@@ -5,8 +5,8 @@ export const Colors = {
   white: '#ffffffaa',
   light: '#e6fffa',
   background: '#e3fcf7',
-  danger: '#ff0000',
-  success: '#00ff00',
+  danger: '#f14668',
+  success: '#63f06a',
 };
 
 export const Fonts = {
