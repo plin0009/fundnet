@@ -179,18 +179,18 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primary,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.larger,
     flexShrink: 1,
   },
   header: {
     color: Colors.secondary,
-    fontFamily: Fonts.bold,
+    fontFamily: Fonts.family.bold,
     fontSize: Fonts.size.medium,
   },
   location: {
     color: Colors.secondary,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.smaller,
     marginVertical: 20,
   },
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   availabilityTableHeader: {
     flexGrow: 1,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.smaller,
     color: Colors.secondary,
     textAlign: 'center',
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
   availabilityDayTitle: {
     color: Colors.secondary,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.smaller,
     textAlign: 'center',
     textAlignVertical: 'center',

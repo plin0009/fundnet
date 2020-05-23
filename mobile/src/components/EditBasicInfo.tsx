@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   header: {
     color: Colors.secondary,
-    fontFamily: Fonts.bold,
+    fontFamily: Fonts.family.bold,
     fontSize: Fonts.size.medium,
   },
   titleBox: {
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primary,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.larger,
     flexShrink: 1,
   },

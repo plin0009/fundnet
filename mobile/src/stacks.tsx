@@ -20,10 +20,10 @@ const screenOptions: StackNavigationOptions = {
   },
   headerTintColor: Colors.primary,
   headerTitleStyle: {
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
   },
   headerBackTitleStyle: {
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
   },
 };
 export const MeStackScreen = () => {

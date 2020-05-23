@@ -101,18 +101,18 @@ const styles = StyleSheet.create({
   },
   attributeButton: { padding: 10, paddingHorizontal: 20, borderRadius: 100 },
   title: {
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.larger,
     color: Colors.light,
     textAlign: 'center',
   },
   subtitle: {
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.medium,
     color: Colors.link,
   },
   attributeTitle: {
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.smaller,
     color: Colors.primary,
     textAlign: 'center',

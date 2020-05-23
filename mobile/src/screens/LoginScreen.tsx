@@ -65,14 +65,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.primary,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.larger,
     textAlign: 'center',
     margin: 20,
   },
   subtitle: {
     color: Colors.secondary,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.medium,
     textAlign: 'center',
   },

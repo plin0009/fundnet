@@ -10,8 +10,7 @@ export const Colors = {
 };
 
 export const Fonts = {
-  family: 'Jost-Regular',
-  bold: 'Jost-Bold',
+  family: { regular: 'Jost-Regular', bold: 'Jost-Bold' },
   size: {
     large: 40,
     larger: 30,

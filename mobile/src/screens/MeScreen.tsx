@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
   profileHeader: { padding: 40, backgroundColor: Colors.white },
   title: {
     color: Colors.primary,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.large,
     textAlign: 'center',
   },
   subtitle: {
     color: Colors.secondary,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.medium,
     textAlign: 'center',
   },

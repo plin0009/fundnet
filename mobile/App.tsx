@@ -34,7 +34,7 @@ const Stack = createBottomTabNavigator<RootStackParamList>();
 
 const tabBarOptions: BottomTabBarOptions = {
   labelStyle: {
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
   },
   activeTintColor: Colors.primary,
   inactiveTintColor: Colors.primary + 'aa',

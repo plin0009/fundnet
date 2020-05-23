@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
   textbox: {
     backgroundColor: Colors.white,
     padding: 20,
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.medium,
     borderRadius: 10,
     borderColor: Colors.primary,
     borderWidth: 2,
   },
   label: {
-    fontFamily: Fonts.family,
+    fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.medium,
     marginBottom: 10,
     color: Colors.primary,
