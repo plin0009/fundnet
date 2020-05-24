@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { MeStackParamList } from 'src/types';
+import { MeStackParamList, RootStackParamList } from 'src/types';
 import Textbox from '../components/Textbox';
 import { Fonts, Colors } from '../styles';
 import { Button, ClickableText } from '../components/Button';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useMutation } from '@apollo/react-hooks';
 import { SIGNUP, AuthData, AuthVars } from '../queries';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { CompositeNavigationProp } from '@react-navigation/native';
 
 interface Props {
-  navigation: StackNavigationProp<MeStackParamList, 'Signup'>;
+  navigation: CompositeNavigationProp<
+    StackNavigationProp<MeStackParamList, 'Signup'>,
+    BottomTabNavigationProp<RootStackParamList, 'Me'>
+  >;
 }
 
 const SignupScreen = ({ navigation }: Props) => {

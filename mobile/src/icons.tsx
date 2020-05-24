@@ -1,8 +1,9 @@
 import React from 'react';
 import { Svg, Circle, Rect } from 'react-native-svg';
+import { RootStackParamList } from './types';
 
 interface Props {
-  name: string;
+  name: keyof RootStackParamList;
   focused: boolean;
   color: string;
   size: number;
@@ -14,13 +15,21 @@ interface IconProps {
 }
 
 export const getTabBarIcon = ({ name, color, size }: Props) => {
-  return Icons[name]({ color, size });
+  return TabBarIcons[name]({ color, size });
 };
 
-const Icons: Record<string, (props: IconProps) => Element> = {
+const TabBarIcons: Record<
+  keyof RootStackParamList,
+  (props: IconProps) => Element
+> = {
   Bulletins: ({ color, size }) => (
     <Svg height={size} width={size} viewBox="0 0 100 100">
       <Circle cx="50" cy="50" r="50" fill={color} />
+    </Svg>
+  ),
+  Postings: ({ color, size }) => (
+    <Svg height={size} width={size} viewBox="0 0 100 100">
+      <Circle cx="50" cy="50" r="25" fill={color} />
     </Svg>
   ),
   Me: ({ color, size }) => (

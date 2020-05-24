@@ -34,8 +34,7 @@ export const LOGOUT = gql`
   }
 `;
 
-export interface MeData {
-  handle: string;
+interface BulletinFilterData {
   minAge: number;
   maxAge: number;
   homeOwner: Attribute;
@@ -50,7 +49,12 @@ export interface MeData {
   employmentHours: EmploymentHours;
   employmentStatus: EmploymentStatus;
   income: number;
+  minIncome: number;
+  maxIncome: number;
+}
 
+export interface MeData extends BulletinFilterData {
+  handle: string;
   location: Location;
   availability: Availability;
 }
@@ -189,6 +193,49 @@ export const CHANGE_ME = gql`
           afternoon
           evening
         }
+      }
+    }
+  }
+`;
+
+export interface BulletinData {
+  _id: string;
+  title: string;
+  description: string;
+  website: string;
+  creator: {
+    name: string;
+  };
+  filters: BulletinFilterData;
+}
+
+export const GET_BULLETINS = gql`
+  {
+    bulletins {
+      _id
+      title
+      description
+      website
+      creator {
+        name
+      }
+      filters {
+        minAge
+        maxAge
+
+        homeOwner
+        autoOwner
+        student
+        veteran
+        pregnant
+        parent
+        physicalCondition
+        mentalCondition
+
+        employmentHours
+        employmentStatus
+        minIncome
+        maxIncome
       }
     }
   }

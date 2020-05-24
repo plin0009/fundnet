@@ -3,16 +3,24 @@ import {
   createStackNavigator,
   StackNavigationOptions,
 } from '@react-navigation/stack';
-import { MeStackParamList, BulletinsStackParamList } from './types';
+import { Colors, Fonts } from './styles';
+
+import {
+  MeStackParamList,
+  BulletinsStackParamList,
+  PostingsStackParamList,
+} from './types';
 
 import SignupScreen from './screens/SignupScreen';
 import BulletinsScreen from './screens/BulletinsScreen';
 import LoginScreen from './screens/LoginScreen';
-import { Colors, Fonts } from './styles';
 import MeScreen from './screens/MeScreen';
+import PostingsScreen from './screens/PostingsScreen';
+import BulletinScreen from './screens/BulletinScreen';
 
 const MeStack = createStackNavigator<MeStackParamList>();
 const BulletinsStack = createStackNavigator<BulletinsStackParamList>();
+const PostingsStack = createStackNavigator<PostingsStackParamList>();
 
 const screenOptions: StackNavigationOptions = {
   headerStyle: {
@@ -48,6 +56,15 @@ export const BulletinsStackScreen = () => {
   return (
     <BulletinsStack.Navigator screenOptions={screenOptions}>
       <BulletinsStack.Screen name="Bulletins" component={BulletinsScreen} />
+      <BulletinsStack.Screen name="Bulletin" component={BulletinScreen} />
     </BulletinsStack.Navigator>
+  );
+};
+
+export const PostingsStackScreen = () => {
+  return (
+    <PostingsStack.Navigator screenOptions={screenOptions}>
+      <PostingsStack.Screen name="Postings" component={PostingsScreen} />
+    </PostingsStack.Navigator>
   );
 };

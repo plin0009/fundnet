@@ -1,6 +1,9 @@
+import { BulletinData } from './queries';
+
 export type RootStackParamList = {
-  Me: undefined;
   Bulletins: undefined;
+  Postings: undefined;
+  Me: undefined;
 };
 
 export type MeStackParamList = {
@@ -11,6 +14,11 @@ export type MeStackParamList = {
 
 export type BulletinsStackParamList = {
   Bulletins: undefined;
+  Bulletin: BulletinData;
+};
+
+export type PostingsStackParamList = {
+  Postings: undefined;
 };
 
 export type Attributes =

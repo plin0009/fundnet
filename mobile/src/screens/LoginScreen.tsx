@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { MeStackParamList } from 'src/types';
+import { MeStackParamList, RootStackParamList } from 'src/types';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Colors, Fonts } from '../styles';
@@ -8,9 +8,14 @@ import { Button, ClickableText } from '../components/Button';
 import Textbox from '../components/Textbox';
 import { useMutation } from '@apollo/react-hooks';
 import { LOGIN, AuthData, AuthVars } from '../queries';
+import { CompositeNavigationProp } from '@react-navigation/native';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 interface Props {
-  navigation: StackNavigationProp<MeStackParamList, 'Login'>;
+  navigation: CompositeNavigationProp<
+    StackNavigationProp<MeStackParamList, 'Login'>,
+    BottomTabNavigationProp<RootStackParamList, 'Me'>
+  >;
 }
 const LoginScreen = ({ navigation }: Props) => {
   const [handleInput, setHandleInput] = useState('');

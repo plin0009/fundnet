@@ -14,7 +14,11 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { RootStackParamList } from './src/types';
 
-import { MeStackScreen, BulletinsStackScreen } from './src/stacks';
+import {
+  MeStackScreen,
+  BulletinsStackScreen,
+  PostingsStackScreen,
+} from './src/stacks';
 import { Fonts, Colors } from './src/styles';
 import { getTabBarIcon } from './src/icons';
 
@@ -56,6 +60,14 @@ const App = () => {
             options={{
               tabBarIcon: (props) =>
                 getTabBarIcon({ name: 'Bulletins', ...props }),
+            }}
+          />
+          <Stack.Screen
+            name="Postings"
+            component={PostingsStackScreen}
+            options={{
+              tabBarIcon: (props) =>
+                getTabBarIcon({ name: 'Postings', ...props }),
             }}
           />
           <Stack.Screen
