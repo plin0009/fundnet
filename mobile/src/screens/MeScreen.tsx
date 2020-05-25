@@ -33,7 +33,7 @@ const MeScreen = ({ navigation }: Props) => {
   const [changeMe] = useMutation<{ changeMe: MeData }>(CHANGE_ME);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      refetch();
+      refetch && refetch();
     });
     return unsubscribe;
   }, [navigation, refetch]);
@@ -79,6 +79,12 @@ const MeScreen = ({ navigation }: Props) => {
             title="Already have an account? Log in"
             onPress={() => {
               navigation.navigate('Login');
+            }}
+          />
+          <ClickableText
+            title="Are you an organization?"
+            onPress={() => {
+              navigation.navigate('Org');
             }}
           />
         </View>

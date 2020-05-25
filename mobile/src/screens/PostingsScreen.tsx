@@ -88,6 +88,7 @@ const PostingsScreen = ({ navigation }: Props) => {
               })
               .map((posting) => (
                 <Listing
+                  key={posting._id}
                   {...posting}
                   onPress={() => {
                     navigation.navigate('Posting', posting);

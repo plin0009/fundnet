@@ -7,6 +7,7 @@ import { Colors, Fonts } from './styles';
 
 import {
   MeStackParamList,
+  OrgStackParamList,
   BulletinsStackParamList,
   PostingsStackParamList,
 } from './types';
@@ -16,10 +17,14 @@ import BulletinsScreen from './screens/BulletinsScreen';
 import LoginScreen from './screens/LoginScreen';
 import MeScreen from './screens/MeScreen';
 import PostingsScreen from './screens/PostingsScreen';
-import BulletinScreen from './screens/BulletinScreen';
+import ListingScreen from './screens/BulletinScreen';
 import PostingScreen from './screens/PostingScreen';
+import OrgScreen from './screens/OrgScreen';
+import OrgSignupScreen from './screens/OrgSignupScreen';
+import OrgLoginScreen from './screens/OrgLoginScreen';
 
 const MeStack = createStackNavigator<MeStackParamList>();
+const OrgStack = createStackNavigator<OrgStackParamList>();
 const BulletinsStack = createStackNavigator<BulletinsStackParamList>();
 const PostingsStack = createStackNavigator<PostingsStackParamList>();
 
@@ -53,11 +58,24 @@ export const MeStackScreen = () => {
   );
 };
 
+export const OrgStackScreen = () => {
+  return (
+    <OrgStack.Navigator screenOptions={screenOptions}>
+      <OrgStack.Screen
+        name="Org"
+        component={OrgScreen}
+        options={{ title: 'Organization' }}
+      />
+      <OrgStack.Screen name="Signup" component={OrgSignupScreen} />
+      <OrgStack.Screen name="Login" component={OrgLoginScreen} />
+    </OrgStack.Navigator>
+  );
+};
 export const BulletinsStackScreen = () => {
   return (
     <BulletinsStack.Navigator screenOptions={screenOptions}>
       <BulletinsStack.Screen name="Bulletins" component={BulletinsScreen} />
-      <BulletinsStack.Screen name="Bulletin" component={BulletinScreen} />
+      <BulletinsStack.Screen name="Bulletin" component={ListingScreen} />
     </BulletinsStack.Navigator>
   );
 };

@@ -11,6 +11,9 @@ export interface AuthVars {
   handle: string;
   pass: string;
 }
+export interface OrgSignupVars extends AuthVars {
+  name: string;
+}
 export interface AuthData {
   token: string;
 }
@@ -31,6 +34,21 @@ export const LOGIN = gql`
 export const LOGOUT = gql`
   mutation {
     logout
+  }
+`;
+
+export const ORG_SIGNUP = gql`
+  mutation orgSignup($handle: String!, $name: String!, $pass: String!) {
+    orgSignup(handle: $handle, name: $name, pass: $pass) {
+      token
+    }
+  }
+`;
+export const ORG_LOGIN = gql`
+  mutation orgLogin($handle: String!, $pass: String!) {
+    orgLogin(handle: $handle, pass: $pass) {
+      token
+    }
   }
 `;
 
@@ -66,6 +84,15 @@ export interface MeData extends BulletinFilterData {
   location: Location;
   availability: Availability;
 }
+
+export interface OrgMeData {
+  handle: string;
+  name: string;
+  website: string;
+  bulletins: BulletinData[];
+  postings: PostingData[];
+}
+
 export const GET_ME = gql`
   {
     me {
@@ -130,6 +157,95 @@ export const GET_ME = gql`
           morning
           afternoon
           evening
+        }
+      }
+    }
+  }
+`;
+
+export const GET_ORG_ME = gql`
+  {
+    orgMe {
+      handle
+      name
+      website
+      bulletins {
+        _id
+        title
+        creator {
+          name
+        }
+        description
+        website
+        filters {
+          minAge
+          maxAge
+
+          homeOwner
+          autoOwner
+          student
+          veteran
+          pregnant
+          parent
+          physicalCondition
+          mentalCondition
+
+          employmentHours
+          employmentStatus
+          minIncome
+          maxIncome
+        }
+      }
+      postings {
+        _id
+        title
+        creator {
+          name
+        }
+        description
+        website
+        filters {
+          geofence {
+            coords
+            distance
+          }
+          availabilities {
+            sun {
+              morning
+              afternoon
+              evening
+            }
+            mon {
+              morning
+              afternoon
+              evening
+            }
+            tue {
+              morning
+              afternoon
+              evening
+            }
+            wed {
+              morning
+              afternoon
+              evening
+            }
+            thu {
+              morning
+              afternoon
+              evening
+            }
+            fri {
+              morning
+              afternoon
+              evening
+            }
+            sat {
+              morning
+              afternoon
+              evening
+            }
+          }
         }
       }
     }

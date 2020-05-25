@@ -18,6 +18,7 @@ import {
   MeStackScreen,
   BulletinsStackScreen,
   PostingsStackScreen,
+  OrgStackScreen,
 } from './src/stacks';
 import { Fonts, Colors } from './src/styles';
 import { getTabBarIcon } from './src/icons';
@@ -68,6 +69,13 @@ const App = () => {
             options={{
               tabBarIcon: (props) =>
                 getTabBarIcon({ name: 'Postings', ...props }),
+            }}
+          />
+          <Stack.Screen
+            name="Org"
+            component={OrgStackScreen}
+            options={{
+              tabBarIcon: (props) => getTabBarIcon({ name: 'Org', ...props }),
             }}
           />
           <Stack.Screen

@@ -3,11 +3,18 @@ import { BulletinData, PostingData } from './queries';
 export type RootStackParamList = {
   Bulletins: undefined;
   Postings: undefined;
+  Org: undefined;
   Me: undefined;
 };
 
 export type MeStackParamList = {
   Me: undefined;
+  Signup: undefined;
+  Login: undefined;
+};
+
+export type OrgStackParamList = {
+  Org: undefined;
   Signup: undefined;
   Login: undefined;
 };
