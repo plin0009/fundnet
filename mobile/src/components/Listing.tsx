@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { BulletinData } from '../queries';
+import { BulletinData, ListingData } from '../queries';
 import { Colors, Fonts } from '../styles';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-interface BulletinProps extends BulletinData {
+interface BulletinProps extends ListingData {
   onPress: () => void;
 }
 
-const Bulletin = ({ title, creator: { name }, onPress }: BulletinProps) => {
+const Listing = ({ title, creator: { name }, onPress }: BulletinProps) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.box}>
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
     fontSize: Fonts.size.small,
   },
 });
-export default Bulletin;
+export default Listing;

@@ -1,4 +1,4 @@
-import { BulletinData } from './queries';
+import { BulletinData, PostingData } from './queries';
 
 export type RootStackParamList = {
   Bulletins: undefined;
@@ -19,6 +19,7 @@ export type BulletinsStackParamList = {
 
 export type PostingsStackParamList = {
   Postings: undefined;
+  Posting: PostingData;
 };
 
 export type Attributes =

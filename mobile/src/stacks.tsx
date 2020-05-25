@@ -17,6 +17,7 @@ import LoginScreen from './screens/LoginScreen';
 import MeScreen from './screens/MeScreen';
 import PostingsScreen from './screens/PostingsScreen';
 import BulletinScreen from './screens/BulletinScreen';
+import PostingScreen from './screens/PostingScreen';
 
 const MeStack = createStackNavigator<MeStackParamList>();
 const BulletinsStack = createStackNavigator<BulletinsStackParamList>();
@@ -65,6 +66,7 @@ export const PostingsStackScreen = () => {
   return (
     <PostingsStack.Navigator screenOptions={screenOptions}>
       <PostingsStack.Screen name="Postings" component={PostingsScreen} />
+      <PostingsStack.Screen name="Posting" component={PostingScreen} />
     </PostingsStack.Navigator>
   );
 };

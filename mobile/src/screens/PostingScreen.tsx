@@ -2,15 +2,15 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, Linking } from 'react-native';
 import { Colors, Fonts } from '../styles';
 import { RouteProp } from '@react-navigation/native';
-import { BulletinsStackParamList } from '../types';
+import { PostingsStackParamList } from '../types';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Button } from '../components/Button';
 
-interface BulletinScreenProps {
-  route: RouteProp<BulletinsStackParamList, 'Bulletin'>;
+interface PostingScreenProps {
+  route: RouteProp<PostingsStackParamList, 'Posting'>;
 }
 
-const BulletinScreen = ({ route }: BulletinScreenProps) => {
+const PostingScreen = ({ route }: PostingScreenProps) => {
   const {
     title,
     creator: { name },
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BulletinScreen;
+export default PostingScreen;

@@ -13,7 +13,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { ScrollView, Switch } from 'react-native-gesture-handler';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_BULLETINS, BulletinData, MeData, GET_ME } from '../queries';
-import Bulletin from '../components/Bulletin';
+import Listing from '../components/Listing';
 
 interface Props {
   navigation: CompositeNavigationProp<
@@ -33,7 +33,7 @@ const BulletinsScreen = ({ navigation }: Props) => {
     <SafeAreaView style={styles.body}>
       <View style={styles.headerBox}>
         <Text style={styles.title}>Bulletins</Text>
-        <View style={[styles.filterBox, me === null && { opacity: 0.6 }]}>
+        <View style={[styles.filterBox, me === null && styles.disabled]}>
           <Text style={styles.subtitle}>Filter bulletins to fit me</Text>
           <Switch
             value={filtering}
@@ -45,7 +45,7 @@ const BulletinsScreen = ({ navigation }: Props) => {
           />
         </View>
         {me === null && (
-          <Text style={styles.subtitle}>
+          <Text style={styles.note}>
             Create an account to show relevant bulletins only.
           </Text>
         )}
@@ -124,7 +124,7 @@ const BulletinsScreen = ({ navigation }: Props) => {
                 return true;
               })
               .map((bulletin) => (
-                <Bulletin
+                <Listing
                   key={bulletin._id}
                   {...bulletin}
                   onPress={() => {
@@ -153,6 +153,11 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.family.regular,
     fontSize: Fonts.size.medium,
   },
+  note: {
+    color: Colors.secondary,
+    fontFamily: Fonts.family.regular,
+    fontSize: Fonts.size.smaller,
+  },
   headerBox: {
     padding: 40,
   },
@@ -161,5 +166,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  disabled: { opacity: 0.6 },
 });
 export default BulletinsScreen;

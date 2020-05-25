@@ -53,6 +53,14 @@ interface BulletinFilterData {
   maxIncome: number;
 }
 
+interface PostingFilterData {
+  geofence: {
+    coords: [number, number];
+    distance: number;
+  };
+  availabilities: Availability[];
+}
+
 export interface MeData extends BulletinFilterData {
   handle: string;
   location: Location;
@@ -198,7 +206,7 @@ export const CHANGE_ME = gql`
   }
 `;
 
-export interface BulletinData {
+export interface ListingData {
   _id: string;
   title: string;
   description: string;
@@ -206,6 +214,9 @@ export interface BulletinData {
   creator: {
     name: string;
   };
+}
+
+export interface BulletinData extends ListingData {
   filters: BulletinFilterData;
 }
 
@@ -236,6 +247,66 @@ export const GET_BULLETINS = gql`
         employmentStatus
         minIncome
         maxIncome
+      }
+    }
+  }
+`;
+
+export interface PostingData extends ListingData {
+  filters: PostingFilterData;
+}
+export const GET_POSTINGS = gql`
+  {
+    postings {
+      _id
+      title
+      description
+      website
+      creator {
+        name
+      }
+      filters {
+        geofence {
+          coords
+          distance
+        }
+        availabilities {
+          sun {
+            morning
+            afternoon
+            evening
+          }
+          mon {
+            morning
+            afternoon
+            evening
+          }
+          tue {
+            morning
+            afternoon
+            evening
+          }
+          wed {
+            morning
+            afternoon
+            evening
+          }
+          thu {
+            morning
+            afternoon
+            evening
+          }
+          fri {
+            morning
+            afternoon
+            evening
+          }
+          sat {
+            morning
+            afternoon
+            evening
+          }
+        }
       }
     }
   }
